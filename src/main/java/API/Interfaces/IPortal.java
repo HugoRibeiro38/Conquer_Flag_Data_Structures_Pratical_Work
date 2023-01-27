@@ -1,9 +1,10 @@
 package API.Interfaces;
 
+import API.Enums.TeamType;
 import API.Player;
 
 public interface IPortal extends ILocalType {
-    String getStatus();
+    TeamType getStatus();
 
     Player getPlayer();
 

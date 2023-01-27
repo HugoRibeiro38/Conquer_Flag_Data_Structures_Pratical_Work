@@ -1,5 +1,6 @@
 package Program;
 
+import API.Connector;
 import API.Enums.LocalType;
 import API.Interfaces.IConnector;
 import API.Interfaces.IPortal;
@@ -21,10 +22,12 @@ public class Main {
 
         //System.out.println(portal.getID());
 
-        IPortal portal1 = new Portal("G", 5, 5);
+       /* IPortal portal1 = new Portal("G", 5, 5);
 
 
-        System.out.println(portal1.toString());
+        System.out.println(portal1.getStatus());*/
+        IConnector connector = new Connector(1, 1);
+        System.out.println(connector.toString());
 
 
     }

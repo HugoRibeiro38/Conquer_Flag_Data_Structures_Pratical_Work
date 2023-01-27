@@ -1,21 +1,23 @@
 package API;
+
 import API.Abstractions.AGameSettings;
 import API.Enums.LocalType;
+import API.Enums.TeamType;
 import API.Interfaces.IPortal;
 
 public class Portal extends Local implements IPortal {
-    private String name;
-    private String status;
-    //private Player OwnPlayer;
-    private static int DEFAULT_ENERGY = 0;
-    private AGameSettings gameSettings;
+  private String name;
+  private TeamType status;
+  //private Player OwnPlayer;
+  private final static int DEFAULT_ENERGY = 0;
+  private AGameSettings gameSettings;
 
     public Portal(String name, float latitude, float longitude ) {
         super(latitude, longitude);
         this.gameSettings= new GameSettings(DEFAULT_ENERGY,null);
         this.name = name;
         super.localType = LocalType.NEUTRAL;
-        this.status = "Neutral";
+        this.status = TeamType.NEUTRAL;
     }
 
 
@@ -42,95 +44,95 @@ public class Portal extends Local implements IPortal {
     }
      */
 
-    @Override
-    public String getName() {
-        return this.name;
+  @Override
+  public String getName() {
+    return this.name;
+  }
+
+  @Override
+  public void setName(String name) {
+    this.name = name;
+  }
+
+  @Override
+  public LocalType getType() {
+    return super.localType;
+  }
+
+  @Override
+  public float getLatitude() {
+    return super.latitude;
+  }
+
+  @Override
+  public float getLongitude() {
+    return super.longitude;
+  }
+
+  @Override
+  public TeamType getStatus() {
+    return this.status;
+  }
+
+  @Override
+  public Player getPlayer() {
+    GameSettings gameSettings1 = (GameSettings) this.gameSettings;
+    return gameSettings1.ownerShip.getPlayer();
+  }
+
+  //TODO: Refactor string Method
+  private class GameSettings extends AGameSettings {
+    private OwnerShip ownerShip;
+
+
+    public GameSettings(int energy, Player player) {
+      super(energy);
+      this.ownerShip = new OwnerShip(player);
     }
 
-    @Override
-    public void setName(String name) {
-        this.name = name;
-    }
+    private class OwnerShip {
+      private Player player;
 
-    @Override
-    public LocalType getType() {
-        return super.localType;
-    }
+      public OwnerShip(Player player) {
+        this.player = player;
+      }
 
-    @Override
-    public float getLatitude() {
-        return super.latitude;
-    }
+      public Player getPlayer() {
+        return player;
+      }
 
-    @Override
-    public float getLongitude() {
-        return super.longitude;
-    }
+      public void setPlayer(Player player) {
+        this.player = player;
+      }
 
-    @Override
-    public String getStatus() {
-        return this.status;
-    }
-
-    @Override
-    public Player getPlayer() {
-       GameSettings gameSettings1 =  (GameSettings) this.gameSettings;
-        return gameSettings1.ownerShip.getPlayer();
-    }
-
-    private class GameSettings extends AGameSettings {
-        private OwnerShip ownerShip;
-
-
-
-        public GameSettings(int energy,Player player) {
-            super(energy);
-            this.ownerShip = new OwnerShip(player);
-        }
-
-        private class OwnerShip {
-            private Player player;
-
-            public OwnerShip(Player player) {
-                this.player = player;
-            }
-
-            public Player getPlayer() {
-                return player;
-            }
-
-            public void setPlayer(Player player) {
-                this.player = player;
-            }
-
-            @Override
-            public String toString() {
-                return "OwnerShip{" +
-                    "player=" + player +
-                    '}';
-            }
-        }
-
-        @Override
-        public String toString() {
-            return "{" +
-                super.toString()+ "," +
-                "ownerShip=" + ownerShip.toString() +
-                '}';
-        }
+      @Override
+      public String toString() {
+        return "OwnerShip{" +
+            "player=" + player +
+            '}';
+      }
     }
 
     @Override
     public String toString() {
-        return "Portal{" +
-            "name='" + name + '\'' +
-            ", status='" + status + '\'' +
-            ", OwnPlayer=" + getPlayer() +
-            ", gameSettings=" + gameSettings +
-            ", latitude=" + latitude +
-            ", longitude=" + longitude +
-            ", ID=" + ID +
-            ", localType=" + localType +
-            '}';
+      return "{" +
+          super.toString() + "," +
+          "ownerShip=" + ownerShip.toString() +
+          '}';
     }
+  }
+
+  @Override
+  public String toString() {
+    return "Portal{" +
+        "name='" + name + '\'' +
+        ", status='" + status + '\'' +
+        ", OwnPlayer=" + getPlayer() +
+        ", gameSettings=" + gameSettings +
+        ", latitude=" + latitude +
+        ", longitude=" + longitude +
+        ", ID=" + ID +
+        ", localType=" + localType +
+        '}';
+  }
 }

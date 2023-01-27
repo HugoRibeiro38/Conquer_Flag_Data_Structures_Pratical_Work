@@ -18,7 +18,7 @@ public class Local implements ILocalType {
         this.latitude = latitude;
         this.longitude = longitude;
         this.ID = nextID++;
-
+        this.localType= LocalType.detectLocalType(this.getClass().getSimpleName());
     }
 
     /*
