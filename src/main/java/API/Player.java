@@ -1,8 +1,9 @@
 package API;
 
 import API.Enums.TeamType;
+import API.Interfaces.IPlayer;
 
-public class Player {
+public class Player implements IPlayer {
 
     private String name;
     private TeamType team;

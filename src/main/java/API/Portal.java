@@ -1,18 +1,17 @@
 package API;
-
 import API.Enums.LocalType;
 import API.Interfaces.IPortal;
 
 public class Portal extends Local implements IPortal {
-
     private String name;
     private String status;
     private Player OwnPlayer;
+    private static int DEFAULT_ENERGY = 0;
 
-    public Portal(String name, float latitude, float longitude, int ID, int energy, String localType) {
-        super(latitude, longitude, energy);
+    public Portal(String name, float latitude, float longitude ) {
+        super(latitude, longitude, DEFAULT_ENERGY);
         this.name = name;
-        PortalTypeCheck(localType);
+        super.localType = LocalType.NEUTRAL;
         this.status = "Neutral";
         this.OwnPlayer = null;
     }
@@ -24,13 +23,6 @@ public class Portal extends Local implements IPortal {
         StatusCheck(status);
     }
     */
-
-    private void PortalTypeCheck(String localType) {
-        switch (localType){
-            case "Portal":
-                super.localType = LocalType.PORTAL;
-        }
-    }
 
     /*
     private void StatusCheck(String status) {
