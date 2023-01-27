@@ -12,7 +12,7 @@ public class Local implements ILocalType {
     protected LocalType localType;
 
     /**
-     * Construtor com um ID único para cada instância de Player
+     * Construtor com um ID único para cada instância de Local
      */
     public Local(float latitude, float longitude) {
         this.latitude = latitude;
