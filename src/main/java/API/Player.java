@@ -2,6 +2,7 @@ package API;
 
 import API.Enums.TeamType;
 import API.Interfaces.IPlayer;
+import API.Exceptions.IllegalArgumentException;
 
 public class Player implements IPlayer {
 
@@ -29,6 +30,8 @@ public class Player implements IPlayer {
             case "Sparks":
                 this.team = TeamType.SPARKS;
                 break;
+            default:
+                throw new IllegalArgumentException("Invalid team:" + team);
         }
     }
 

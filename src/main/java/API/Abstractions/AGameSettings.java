@@ -11,10 +11,6 @@ public abstract class AGameSettings {
     return energy;
   }
 
-  public int getCooldownTimer() {
-    throw new UnsupportedOperationException("Not implemented yet");
-  }
-
   @Override
   public String toString() {
     return
