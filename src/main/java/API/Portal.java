@@ -12,7 +12,7 @@ public class Portal extends Local implements IPortal {
     public Portal(String name, float latitude, float longitude, int ID, int energy, String localType) {
         super(latitude, longitude, energy);
         this.name = name;
-        PortalTypeCheck(localType);
+        super.localType = LocalType.PORTAL;
         this.status = "Neutral";
         this.OwnPlayer = null;
     }
@@ -25,12 +25,6 @@ public class Portal extends Local implements IPortal {
     }
     */
 
-    private void PortalTypeCheck(String localType) {
-        switch (localType){
-            case "Portal":
-                super.localType = LocalType.PORTAL;
-        }
-    }
 
     /*
     private void StatusCheck(String status) {
