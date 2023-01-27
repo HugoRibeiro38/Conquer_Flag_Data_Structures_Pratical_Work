@@ -1,19 +1,21 @@
 package API;
+import API.Abstractions.AGameSettings;
 import API.Enums.LocalType;
 import API.Interfaces.IPortal;
 
 public class Portal extends Local implements IPortal {
     private String name;
     private String status;
-    private Player OwnPlayer;
+    //private Player OwnPlayer;
     private static int DEFAULT_ENERGY = 0;
+    private AGameSettings gameSettings;
 
     public Portal(String name, float latitude, float longitude ) {
-        super(latitude, longitude, DEFAULT_ENERGY);
+        super(latitude, longitude);
+        this.gameSettings= new GameSettings(DEFAULT_ENERGY,null);
         this.name = name;
         super.localType = LocalType.NEUTRAL;
         this.status = "Neutral";
-        this.OwnPlayer = null;
     }
 
 
@@ -72,6 +74,63 @@ public class Portal extends Local implements IPortal {
 
     @Override
     public Player getPlayer() {
-        return this.OwnPlayer;
+       GameSettings gameSettings1 =  (GameSettings) this.gameSettings;
+        return gameSettings1.ownerShip.getPlayer();
+    }
+
+    private class GameSettings extends AGameSettings {
+        private OwnerShip ownerShip;
+
+
+
+        public GameSettings(int energy,Player player) {
+            super(energy);
+            this.ownerShip = new OwnerShip(player);
+        }
+
+        private class OwnerShip {
+            private Player player;
+
+            public OwnerShip(Player player) {
+                this.player = player;
+            }
+
+            public Player getPlayer() {
+                return player;
+            }
+
+            public void setPlayer(Player player) {
+                this.player = player;
+            }
+
+            @Override
+            public String toString() {
+                return "OwnerShip{" +
+                    "player=" + player +
+                    '}';
+            }
+        }
+
+        @Override
+        public String toString() {
+            return "{" +
+                super.toString()+ "," +
+                "ownerShip=" + ownerShip.toString() +
+                '}';
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "Portal{" +
+            "name='" + name + '\'' +
+            ", status='" + status + '\'' +
+            ", OwnPlayer=" + getPlayer() +
+            ", gameSettings=" + gameSettings +
+            ", latitude=" + latitude +
+            ", longitude=" + longitude +
+            ", ID=" + ID +
+            ", localType=" + localType +
+            '}';
     }
 }

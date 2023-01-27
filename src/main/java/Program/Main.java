@@ -21,9 +21,10 @@ public class Main {
 
         //System.out.println(portal.getID());
 
-        //IPortal portal1 = new Portal("G", 5, 5);
+        IPortal portal1 = new Portal("G", 5, 5);
 
-        //System.out.println(portal1.getID());
+
+        System.out.println(portal1.toString());
 
 
     }
