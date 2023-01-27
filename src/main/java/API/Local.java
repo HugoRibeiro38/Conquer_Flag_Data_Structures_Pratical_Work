@@ -8,17 +8,17 @@ public class Local implements ILocalType {
     protected float longitude;
     protected static int nextID = 1;
     protected int ID;
-    protected int energy;
+
     protected LocalType localType;
 
     /**
      * Construtor com um ID único para cada instância de Player
      */
-    public Local(float latitude, float longitude, int energy) {
+    public Local(float latitude, float longitude) {
         this.latitude = latitude;
         this.longitude = longitude;
         this.ID = nextID++;
-        this.energy = energy;
+        
     }
 
     /*
