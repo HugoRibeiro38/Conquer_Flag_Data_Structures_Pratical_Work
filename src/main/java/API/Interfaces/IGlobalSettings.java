@@ -2,7 +2,12 @@ package API.Interfaces;
 
 public interface IGlobalSettings {
 
-    int calculateLevel(double experiencePoints, double x, double y);
+  static int calculateLevel(double experiencePoints,double x,double y) {
+    return (int) Math.pow(experiencePoints / x, 1/y);
+  }
 
-    int calculateExperiencePoints(int level);
+  static int calculateExperiencePoints(int level,double x,double y){
+    return (int) Math.pow(level/x, y);
+  }
+
 }

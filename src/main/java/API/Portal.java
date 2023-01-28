@@ -124,7 +124,7 @@ public class Portal extends Local implements IPortal {
     }
     //TODO: Increment player score after adding energy to a portal
 
-    player.setExperiencePoints(player.getExperiencePoints() + GlobalSettings.addPortalEnergyPoints);
+    //player.setExperiencePoints(player.getExperiencePoints() + GlobalSettings.addPortalEnergyPoints);
     return false;
   }
 

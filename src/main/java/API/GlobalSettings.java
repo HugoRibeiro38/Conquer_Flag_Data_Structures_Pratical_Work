@@ -4,13 +4,8 @@ import API.Interfaces.IGlobalSettings;
 
 public class GlobalSettings implements IGlobalSettings {
 
-    @Override
-    public int calculateLevel(double experiencePoints, double x, double y) {
-        return 0;
-    }
+  static final double x = 0.02;
+  static final double y = 1.5;
 
-    @Override
-    public int calculateExperiencePoints(int level) {
-        return 0;
-    }
+
 }
