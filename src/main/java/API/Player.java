@@ -36,7 +36,7 @@ public class Player implements IPlayer {
     }
 
     private int calculateDefaultEnergy() {
-        return DEFAULT_ENERGY + (int)(DEFAULT_ENERGY * 0.05 * this.level);
+        return DEFAULT_ENERGY + (int) (DEFAULT_ENERGY * 0.05 * this.level);
     }
 
     public int getDefaultEnergy() {
@@ -82,6 +82,4 @@ public class Player implements IPlayer {
     public void setCurrentEnergy(int currentEnergy) {
         this.currentEnergy = currentEnergy;
     }
-
-
 }
