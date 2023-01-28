@@ -8,17 +8,17 @@ import API.Interfaces.IPortal;
 public class Portal extends Local implements IPortal {
   private String name;
   private TeamType status;
-  // private Player OwnPlayer;
+  //private Player OwnPlayer;
   private final static int DEFAULT_ENERGY = 0;
   private AGameSettings gameSettings;
 
-  public Portal(String name, float latitude, float longitude) {
-    super(latitude, longitude);
-    this.gameSettings = new GameSettings(DEFAULT_ENERGY, null);
-    this.name = name;
-    super.localType = LocalType.PORTAL;
-    this.status = TeamType.NEUTRAL;
-  }
+    public Portal(String name, float latitude, float longitude ) {
+        super(latitude, longitude);
+        this.gameSettings= new GameSettings(DEFAULT_ENERGY,null);
+        this.name = name;
+        super.localType = LocalType.NEUTRAL;
+        this.status = TeamType.NEUTRAL;
+    }
 
   // Make method that allows a player to capture a portal with TeamType.Neutral,
   // and if so the player needs to have atleast 25% of the maximum energy
@@ -35,7 +35,7 @@ public class Portal extends Local implements IPortal {
      * and energy is greater or equal to 25% of the maximum energy of the player
      * if any part is false then, it returns ;
      */
- 
+
     if (!(energy <= player.getCurrentEnergy()) || !(energy >= maxEnergy * 0.25)) {
       return;
     }
@@ -67,7 +67,7 @@ public class Portal extends Local implements IPortal {
    * this.OwnPlayer = null;
    * System.out.println("This Local is empty");
    * break;
-   * 
+   *
    * case "Owned":
    * this.status = "Owned";
    * System.out.println("This Local dominated by" + OwnPlayer.getTeam() +
