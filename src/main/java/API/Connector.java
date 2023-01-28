@@ -74,11 +74,11 @@ public class Connector extends Local implements IConnector {
             this.cooldownTimer = cooldownTimer;
         }
 
-
     @Override
     public int getEnergy() {
       return super.getEnergy();
     }
+
 
     public int getCooldownTimer() {
       return this.cooldownTimer;
