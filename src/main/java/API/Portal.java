@@ -16,7 +16,7 @@ public class Portal extends Local implements IPortal {
         super(latitude, longitude);
         this.gameSettings= new GameSettings(DEFAULT_ENERGY,null);
         this.name = name;
-        super.localType = LocalType.NEUTRAL;
+        super.localType = LocalType.PORTAL;
         this.status = TeamType.NEUTRAL;
     }
 
