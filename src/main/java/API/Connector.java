@@ -66,7 +66,11 @@ public class Connector extends Local implements IConnector {
     return gameSettings.getCooldownTimer();
   }
 
-    private class GameSettings extends AGameSettings {
+  public GameSettings getGameSettings() {
+    return (GameSettings) gameSettings;
+  }
+
+  private class GameSettings extends AGameSettings {
         private final int cooldownTimer;
 
         public GameSettings(int cooldownTimer, int energy) {
