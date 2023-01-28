@@ -33,7 +33,9 @@ public class Connector extends Local implements IConnector {
 
   /**
    * Construtor de um Connector, sem cooldown timer.
-   * É predefinido o valor de cooldownTimer para 5.
+   * É predefinido o valor de cooldownTimer para 5 e a energia de um connector para um valor aleatório entre (100 - 300).
+   * Ao instanciar um connector, fica guardado no LocalType que é um CONNECTOR
+   *
    *
    * @param latitude  Latitude do Connector
    * @param longitude Longitude do Connector
@@ -46,7 +48,7 @@ public class Connector extends Local implements IConnector {
 
   /**
    * Construtor de um Connector, com cooldown timer.
-   * O Valor do cooldownTimer é definido pelo utilizador.
+   * O Valor do cooldownTimer e energy do connector é definido pelo utilizador.
    *
    * @param latitude      Latitude do Connector
    * @param longitude     Longitude do Connector
