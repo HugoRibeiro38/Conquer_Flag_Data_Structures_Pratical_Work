@@ -23,10 +23,13 @@ public class Portal extends Local implements IPortal {
   // Make method that allows a player to capture a portal with TeamType.Neutral,
   // and if so the player needs to have atleast 25% of the maximum energy
 
+
   public void capturePortal(Player player, int energy) {
     if (this.status != TeamType.NEUTRAL) {
       return;
     }
+
+
     // Get the maximum energy of the player
     int maxEnergy = player.getDefaultEnergy();
 
