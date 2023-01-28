@@ -4,6 +4,8 @@ import API.Enums.TeamType;
 
 public interface IPlayer {
 
+    int getDefaultEnergy();
+
     String getName();
 
     void setName(String name);
