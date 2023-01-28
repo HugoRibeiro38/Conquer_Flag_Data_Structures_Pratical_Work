@@ -1,7 +1,7 @@
 package API.Abstractions;
 
 public abstract class AGameSettings {
-  private final int energy;
+  private int energy;
 
   public AGameSettings(int energy) {
     this.energy = energy;
@@ -9,6 +9,10 @@ public abstract class AGameSettings {
 
   public int getEnergy() {
     return energy;
+  }
+
+  public void setEnergy(int energy) {
+    this.energy = energy;
   }
 
   @Override
