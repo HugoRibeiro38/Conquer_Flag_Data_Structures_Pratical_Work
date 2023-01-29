@@ -11,7 +11,9 @@ public class Portal extends Local implements IPortal {
   //private Player OwnPlayer;
   private final static int DEFAULT_ENERGY = 0;
   private AGameSettings gameSettings;
-  //private int MAX_energy;
+
+  private final int MAX_ENERGY = 400; /* Visto que um connector tem energia de (100 - 300) */
+  private int MAX_energy;
 
   public Portal(String name, float latitude, float longitude) {
     super(latitude, longitude);
@@ -19,6 +21,7 @@ public class Portal extends Local implements IPortal {
     this.name = name;
     super.localType = LocalType.PORTAL;
     this.status = TeamType.NEUTRAL;
+    this.MAX_energy = MAX_ENERGY;
   }
 
   // Make method that allows a player to capture a portal with TeamType.Neutral,
@@ -34,7 +37,7 @@ public class Portal extends Local implements IPortal {
 
     // Get the maximum energy of the portal
     //TODO: Make missing method (getMaxEnergy)
-    int portal_maxEnergy = this.getMaxEnergy();
+    int portal_maxEnergy = this.getMAX_energy();
     int player_currentEnergy = player.getCurrentEnergy();
     /*
      * This checks if the energy is less or equal to current energy of the player
@@ -69,6 +72,7 @@ public class Portal extends Local implements IPortal {
       //TODO: Make custom Exception
       throw new IllegalArgumentException("Player does not have enough energy to capture this portal");
     }
+
 //Energia da Torre 70
 // Energia do player 70
 
@@ -104,7 +108,7 @@ public class Portal extends Local implements IPortal {
     }
 
     int player_currentEnergy = player.getCurrentEnergy();
-    int portal_maxEnergy = this.getMaxEnergy();
+    int portal_maxEnergy = this.getMAX_energy();
     int portal_currentEnergy = this.gameSettings.getEnergy();
     //Check if the energy more than the player has, if so throw an exception
     if (player_currentEnergy < energy) {
@@ -129,32 +133,9 @@ public class Portal extends Local implements IPortal {
   }
 
 
-
-
-  /*
-   * public Portal(String name, float latitude, float longitude, int ID, int
-   * energy, String localType, String status) {
-   * super(name, latitude, longitude, ID, energy, localType);
-   * StatusCheck(status);
-   * }
-   */
-
-  /*
-   * private void StatusCheck(String status) {
-   * switch (status) {
-   * case "Neutral":
-   * this.status = "Neutral";
-   * this.OwnPlayer = null;
-   * System.out.println("This Local is empty");
-   * break;
-   *
-   * case "Owned":
-   * this.status = "Owned";
-   * System.out.println("This Local dominated by" + OwnPlayer.getTeam() +
-   * "conquered by" + OwnPlayer.getName());
-   * }
-   * }
-   */
+  public int getMAX_energy() {
+    return MAX_energy;
+  }
 
   @Override
   public String getName() {
