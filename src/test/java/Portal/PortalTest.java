@@ -20,7 +20,7 @@ public class PortalTest {
         assertEquals(null, portal.getPlayer());
         assertEquals("Felgueiras", portal.getName());
         assertEquals(LocalType.PORTAL, portal.getType());
-        assertEquals(44.5f, portal.getLatitude());
-        assertEquals(44.7f, portal.getLongitude()); // XD
+        assertEquals(44.5f, portal.getCoordinates().getLatitude());
+        assertEquals(44.7f, portal.getCoordinates().getLongitude()); // XD
     }
 }

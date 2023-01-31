@@ -67,40 +67,40 @@ public class Portal extends Local implements IPortal {
     // TODO: Remove this if statement, and make it so that the player can capture a
     // portal with !=TeamType and TeamType!=NEUTRAL in the menu class
     if (this.status != player.getTeam() && this.status != TeamType.NEUTRAL) {
-     
-    // GameSettings should be Max Energy of the Portal, not the Current Energy
-    if (this.gameSettings.getEnergy() > player.getCurrentEnergy()) {
-      // TODO: Make custom Exception
-      throw new IllegalArgumentException("Player does not have enough energy to capture this portal");
+
+      // GameSettings should be Max Energy of the Portal, not the Current Energy
+      if (this.gameSettings.getEnergy() > player.getCurrentEnergy()) {
+        // TODO: Make custom Exception
+        throw new IllegalArgumentException("Player does not have enough energy to capture this portal");
+      }
+
+      // Energia da Torre 70
+      // Energia do player 70
+
+      // 0
+      this.gameSettings.setEnergy(this.gameSettings.getEnergy() - player.getCurrentEnergy());
+      // 0
+      int remainingEnergy = Math.abs(this.gameSettings.getEnergy());
+
+      // Check if the portal has no energy left
+      if (gameSettings.getEnergy() < 0) {
+        this.gameSettings.setEnergy(0);
+      }
+      // 0
+      player.setCurrentEnergy(remainingEnergy);
+
+      // TODO: Increment player score after capturing an Enemy portal
+      // OwnerShip to null
+      GameSettings gameSettings = (GameSettings) this.gameSettings;
+      gameSettings.getOwnerShip().setPlayer(null);
+      this.status = TeamType.NEUTRAL;
+      System.out.println("Player " + player.getName() + "de-captured the portal " + this.name);
+      player.setExperiencePoints(player.getExperiencePoints() + GlobalSettings.captureEnemyPortal);
+
+      // Return true if Portal has been captured, false if not
+
     }
-
-    // Energia da Torre 70
-    // Energia do player 70
-
-    // 0
-    this.gameSettings.setEnergy(this.gameSettings.getEnergy() - player.getCurrentEnergy());
-    // 0
-    int remainingEnergy = Math.abs(this.gameSettings.getEnergy());
-
-    // Check if the portal has no energy left
-    if (gameSettings.getEnergy() < 0) {
-      this.gameSettings.setEnergy(0);
-    }
-    // 0
-    player.setCurrentEnergy(remainingEnergy);
-
-    // TODO: Increment player score after capturing an Enemy portal
-    // OwnerShip to null
-    GameSettings gameSettings = (GameSettings) this.gameSettings;
-    gameSettings.getOwnerShip().setPlayer(null);
-    this.status = TeamType.NEUTRAL;
-    System.out.println("Player " + player.getName() + "de-captured the portal " + this.name);
-    player.setExperiencePoints(player.getExperiencePoints() + GlobalSettings.captureEnemyPortal);
-
-    // Return true if Portal has been captured, false if not
-    
-  }
-  return conquerPortal(player);
+    return conquerPortal(player);
   }
 
   // Make method that allows a player make a portal stronger by adding its current
@@ -145,16 +145,6 @@ public class Portal extends Local implements IPortal {
   @Override
   public LocalType getType() {
     return super.localType;
-  }
-
-  @Override
-  public float getLatitude() {
-    return super.latitude;
-  }
-
-  @Override
-  public float getLongitude() {
-    return super.longitude;
   }
 
   @Override
@@ -223,8 +213,8 @@ public class Portal extends Local implements IPortal {
         ", status='" + status + '\'' +
         ", OwnPlayer=" + getPlayer() +
         ", gameSettings=" + gameSettings +
-        ", latitude=" + latitude +
-        ", longitude=" + longitude +
+        ", latitude=" + super.coordinates.getLatitude() +
+        ", longitude=" + super.coordinates.getLongitude() +
         ", ID=" + ID +
         ", localType=" + localType +
         '}';
