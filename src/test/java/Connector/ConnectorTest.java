@@ -20,8 +20,8 @@ public class ConnectorTest {
         assertEquals(5, connector.getCoolDownTimer());
         assertEquals(LocalType.CONNECTOR, connector.getType());
         assertEquals(1, connector.getID());
-        assertEquals(1, connector.getLatitude());
-        assertEquals(2, connector.getLongitude());
+        assertEquals(1, connector.getCoordinates().getLatitude());
+        assertEquals(2, connector.getCoordinates().getLongitude());
     }
 
     /**
@@ -35,8 +35,8 @@ public class ConnectorTest {
         assertEquals(LocalType.CONNECTOR, connector.getType());
         assertEquals(expectedForToString, connector.toString());
         assertEquals(2, connector.getID());
-        assertEquals(4, connector.getLatitude());
-        assertEquals(4, connector.getLongitude());
+        assertEquals(4, connector.getCoordinates().getLatitude());
+        assertEquals(4, connector.getCoordinates().getLongitude());
     }
 
 

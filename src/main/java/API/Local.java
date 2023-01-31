@@ -1,14 +1,15 @@
 package API;
 
 import API.Enums.LocalType;
+import API.Interfaces.ICoordinate;
 import API.Interfaces.ILocalType;
 
-public class Local  implements ILocalType{
-  protected float latitude;
-  protected float longitude;
+public class Local implements ILocalType {
+
   protected static int nextID = 1;
   protected int ID;
   protected LocalType localType;
+  protected final Coordinates coordinates;
 
   /**
    * Construtor para uma instância do tipo Local, onde o ID é predefinido e
@@ -18,8 +19,7 @@ public class Local  implements ILocalType{
    * @param longitude Longitude de um local
    */
   public Local(float latitude, float longitude) {
-    this.latitude = latitude;
-    this.longitude = longitude;
+    this.coordinates = new Coordinates(latitude, longitude);
     this.ID = nextID++;
   }
 
@@ -36,7 +36,7 @@ public class Local  implements ILocalType{
   /**
    * setter para o ID do local.
    *
-   * @param ID
+   * @param ID new ID
    */
   @Override
   public void setID(int ID) {
@@ -53,24 +53,41 @@ public class Local  implements ILocalType{
     return this.localType;
   }
 
-  /**
-   * Getter para a latitude de um local.
-   *
-   * @return latitude do local.
-   */
   @Override
-  public float getLatitude() {
-    return this.latitude;
+  public ICoordinate getCoordinates() {
+    return this.coordinates;
   }
 
-  /**
-   * Getter para a Longitude de um Local
-   *
-   * @return longitude de um local.
-   */
-  @Override
-  public float getLongitude() {
-    return this.longitude;
+
+  public static class Coordinates implements ICoordinate {
+    protected final float latitude;
+    protected final float longitude;
+
+    public Coordinates(float latitude, float longitude) {
+      this.latitude = latitude;
+      this.longitude = longitude;
+    }
+
+
+    /**
+     * Getter para a latitude de um local.
+     *
+     * @return latitude do local.
+     */
+    @Override
+    public float getLatitude() {
+      return this.latitude;
+    }
+
+    /**
+     * Getter para a Longitude de um Local
+     *
+     * @return longitude de um local.
+     */
+    @Override
+    public float getLongitude() {
+      return this.longitude;
+    }
   }
 
 }
