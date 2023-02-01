@@ -2,7 +2,7 @@ package API.Interfaces;
 
 import API.Enums.TeamType;
 
-public interface IPlayer {
+public interface IPlayer  extends Comparable{
 
     int getDefaultEnergy();
 

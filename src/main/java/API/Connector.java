@@ -9,34 +9,34 @@ public class Connector extends Local implements IConnector {
   private static final int DEFAULT_SIZE = 20;
   private static final int DEFAULT_COOLDOWN_TIMER = 5;
 
-    private static final int maxEnergy = 300;
-    private static final int minEnergy = 100;
-    private static final int DEFAULT_ENERGY = (int) (Math.random() * (maxEnergy - minEnergy + 1)) + minEnergy;
-    private final AGameSettings gameSettings;
+  private static final int maxEnergy = 300;
+  private static final int minEnergy = 100;
+  private static final int DEFAULT_ENERGY = (int) (Math.random() * (maxEnergy - minEnergy + 1)) + minEnergy;
+  private final AGameSettings gameSettings;
 
-    public HashMap<Player, Integer> players = new HashMap<>(DEFAULT_SIZE);
+  public HashMap<Player, Integer> players = new HashMap<>(DEFAULT_SIZE);
 
 
   /**
    * Guardar num HashMap os jogadores que ja carregaram no connector para inibilos de carregar energia antes do CoolDown_Timer.
    */
 
-  /*public void reload_energy(Player player) {
-    if(player.containsKey(player) && SimulatePlay.getCurrentTime()-players.get(player)< getCoolDownTimer()){
-    return;}
-    int energyToBeReloaded = Math.min(this.gameSettings.getEnergy(),player.getDefaultEnergy()-player.getCurrentEnergy());
-    player.setEnergy(energyToBeReloaded);
-    player.setExperiencePoints(player.getExperiencePoints()+GlobalSettings.reloadEnergyInConnector)
-    player.put(player,SimulatePlay.getCurrentTime());
+  public void reload_energy(Player player) {
+    int time = SimulatePlay.getTime();
+    if (players.containsKey(player) && ((time - players.get(player)) < getCoolDownTimer())) {
+      return;
     }
-  }*/
+    int energyToBeReloaded = Math.min(this.gameSettings.getEnergy(), player.getDefaultEnergy() - player.getCurrentEnergy());
+    player.setCurrentEnergy(player.getCurrentEnergy() + energyToBeReloaded);
+    player.setExperiencePoints(player.getExperiencePoints() + GlobalSettings.reloadEnergyInConnector);
+    players.put(player, time);
+  }
 
 
   /**
    * Construtor de um Connector, sem cooldown timer.
    * É predefinido o valor de cooldownTimer para 5 e a energia de um connector para um valor aleatório entre (100 - 300).
    * Ao instanciar um connector, fica guardado no LocalType que é um CONNECTOR
-   *
    *
    * @param latitude  Latitude do Connector
    * @param longitude Longitude do Connector
@@ -72,12 +72,12 @@ public class Connector extends Local implements IConnector {
   }
 
   private class GameSettings extends AGameSettings {
-        private final int cooldownTimer;
+    private final int cooldownTimer;
 
-        public GameSettings(int cooldownTimer, int energy) {
-            super(energy);
-            this.cooldownTimer = cooldownTimer;
-        }
+    public GameSettings(int cooldownTimer, int energy) {
+      super(energy);
+      this.cooldownTimer = cooldownTimer;
+    }
 
     @Override
     public int getEnergy() {
@@ -96,14 +96,15 @@ public class Connector extends Local implements IConnector {
           "cooldownTimer=" + cooldownTimer +
           '}';
     }
+
   }
 
   @Override
   public String toString() {
     return "Connector{" +
         "gameSettings=" + gameSettings +
-        ", latitude=" + latitude +
-        ", longitude=" + longitude +
+        ", latitude=" + super.coordinates.getLatitude() +
+        ", longitude=" + super.coordinates.getLongitude() +
         ", ID=" + ID +
         ", localType=" + localType +
         '}';

@@ -3,13 +3,11 @@ package API.Interfaces;
 import API.Enums.LocalType;
 
 public interface ILocalType {
-    LocalType getType();
+  LocalType getType();
 
-    float getLatitude();
+  ICoordinate getCoordinates();
 
-    float getLongitude();
+  int getID();
 
-    int getID();
-
-    void setID(int ID);
+  void setID(int ID);
 }

@@ -128,7 +128,7 @@ public class Portal extends Local implements IPortal {
         return true;
     }
 
-    @Override
+
     public int getMAX_energy() {
         return Portal.MAX_ENERGY;
     }
@@ -146,16 +146,6 @@ public class Portal extends Local implements IPortal {
     @Override
     public LocalType getType() {
         return super.localType;
-    }
-
-    @Override
-    public float getLatitude() {
-        return super.latitude;
-    }
-
-    @Override
-    public float getLongitude() {
-        return super.longitude;
     }
 
     @Override
@@ -224,8 +214,8 @@ public class Portal extends Local implements IPortal {
                 ", status='" + status + '\'' +
                 ", OwnPlayer=" + getPlayer() +
                 ", gameSettings=" + gameSettings +
-                ", latitude=" + latitude +
-                ", longitude=" + longitude +
+                ", latitude=" + super.coordinates.getLatitude() +
+                ", longitude=" + super.coordinates.getLongitude() +
                 ", ID=" + ID +
                 ", localType=" + localType +
                 '}';

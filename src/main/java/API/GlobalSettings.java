@@ -13,4 +13,6 @@ public class GlobalSettings implements IGlobalSettings {
 
 static final int reloadEnergyInConnector = 15;
 
+//static final ConnectorSettings connectorSettings;
+
 }

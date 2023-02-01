@@ -5,7 +5,7 @@ import API.Exceptions.IllegalArgumentException;
 import API.Interfaces.IGlobalSettings;
 import API.Interfaces.IPlayer;
 
-public class Player implements IPlayer {
+public class Player implements IPlayer{
 
   private String name;
   private TeamType team;
@@ -13,6 +13,7 @@ public class Player implements IPlayer {
   private int experiencePoints;
   private int currentEnergy;
   private int DEFAULT_ENERGY = 100;
+  public int currentLocation = -1;
 
   public Player(String name, String team) {
     this.name = name;
@@ -93,5 +94,15 @@ public class Player implements IPlayer {
 
   public void setCurrentEnergy(int currentEnergy) {
     this.currentEnergy = currentEnergy;
+  }
+
+
+  @Override
+  public int compareTo(Object o) {
+    if(!(o instanceof String)){
+      throw new IllegalArgumentException("Invalid object");
+    }
+    String name = (String) o;
+    return getName().compareTo(name);
   }
 }
