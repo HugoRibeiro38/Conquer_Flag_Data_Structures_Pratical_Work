@@ -21,15 +21,16 @@ public class Connector extends Local implements IConnector {
    * Guardar num HashMap os jogadores que ja carregaram no connector para inibilos de carregar energia antes do CoolDown_Timer.
    */
 
-  /*public void reload_energy(Player player) {
-    if(player.containsKey(player) && SimulatePlay.getCurrentTime()-players.get(player)< getCoolDownTimer()){
-    return;}
-    int energyToBeReloaded = Math.min(this.gameSettings.getEnergy(),player.getDefaultEnergy()-player.getCurrentEnergy());
-    player.setEnergy(energyToBeReloaded);
-    player.setExperiencePoints(player.getExperiencePoints()+GlobalSettings.reloadEnergyInConnector)
-    player.put(player,SimulatePlay.getCurrentTime());
+  public void reload_energy(Player player) {
+    int time = SimulatePlay.getTime();
+    if (players.containsKey(player) && ((time - players.get(player)) < getCoolDownTimer())) {
+      return;
     }
-  }*/
+    int energyToBeReloaded = Math.min(this.gameSettings.getEnergy(), player.getDefaultEnergy() - player.getCurrentEnergy());
+    player.setCurrentEnergy(player.getCurrentEnergy() + energyToBeReloaded);
+    player.setExperiencePoints(player.getExperiencePoints() + GlobalSettings.reloadEnergyInConnector);
+    players.put(player, time);
+  }
 
 
   /**
@@ -95,6 +96,7 @@ public class Connector extends Local implements IConnector {
           "cooldownTimer=" + cooldownTimer +
           '}';
     }
+
   }
 
   @Override
