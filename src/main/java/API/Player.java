@@ -1,11 +1,10 @@
 package API;
 
 import API.Enums.TeamType;
-import API.Exceptions.IllegalArgumentException;
 import API.Interfaces.IGlobalSettings;
 import API.Interfaces.IPlayer;
 
-public class Player implements IPlayer{
+public class Player implements IPlayer {
 
   private String name;
   private TeamType team;
@@ -14,28 +13,17 @@ public class Player implements IPlayer{
   private int currentEnergy;
   private int DEFAULT_ENERGY = 100;
   public int currentLocation = -1;
+  private int capturedPortals = 0;
+
 
   public Player(String name, String team) {
     this.name = name;
-    ConvertTeam(team);
+    this.team = TeamType.valueOf(team);
     this.level = 0;
     this.experiencePoints = 0;
     this.currentEnergy = DEFAULT_ENERGY;
   }
 
-  private void ConvertTeam(String team) {
-    switch (team) {
-      case "Giants":
-        this.team = TeamType.GIANTS;
-        break;
-
-      case "Sparks":
-        this.team = TeamType.SPARKS;
-        break;
-      default:
-        throw new IllegalArgumentException("Invalid team:" + team);
-    }
-  }
 
   private int calculateDefaultEnergy() {
     return DEFAULT_ENERGY + (int) (DEFAULT_ENERGY * 0.05 * this.level);
@@ -96,13 +84,39 @@ public class Player implements IPlayer{
     this.currentEnergy = currentEnergy;
   }
 
+  public int getCapturedPortals() {
+    return capturedPortals;
+  }
+
+  public void setCapturedPortals(int capturedPortals) {
+    this.capturedPortals = capturedPortals;
+  }
+
+
+  //DO compareTo method that compares the level of the player, the Team and number of portals conquisted by one player
+  @Override
+  public int compareTo(IPlayer player) {
+    if (!team.equals(player.getTeam())) {
+      return team.compareTo(player.getTeam());
+    }
+    if (level != player.getLevel()) {
+      return Integer.compare(level, player.getLevel());
+    }
+    return Integer.compare(capturedPortals, player.getCapturedPortals());
+  }
+
 
   @Override
-  public int compareTo(Object o) {
-    if(!(o instanceof String)){
-      throw new IllegalArgumentException("Invalid object");
-    }
-    String name = (String) o;
-    return getName().compareTo(name);
+  public String toString() {
+    return "Player{" +
+        "name='" + name + '\'' +
+        ", team=" + team +
+        ", level=" + level +
+        ", experiencePoints=" + experiencePoints +
+        ", currentEnergy=" + currentEnergy +
+        ", MaxEnergy=" + DEFAULT_ENERGY +
+        ", currentLocation=" + currentLocation +
+        ", capturedPortals=" + capturedPortals +
+        '}';
   }
 }

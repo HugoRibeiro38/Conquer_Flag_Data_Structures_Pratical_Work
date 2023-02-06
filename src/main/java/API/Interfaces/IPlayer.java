@@ -5,7 +5,7 @@ import API.Enums.TeamType;
 /**
  * Interface que representa um jogador.
  */
-public interface IPlayer extends Comparable {
+public interface IPlayer extends Comparable<IPlayer> {
 
     /**
      * Retorna a energia padrão do jogador.
@@ -84,4 +84,6 @@ public interface IPlayer extends Comparable {
      * @param currentEnergy a energia atual a ser definida
      */
     void setCurrentEnergy(int currentEnergy);
+    int getCapturedPortals();
+    void setCapturedPortals(int capturedPortals);
 }

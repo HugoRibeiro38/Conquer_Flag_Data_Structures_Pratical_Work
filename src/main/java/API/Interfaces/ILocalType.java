@@ -34,4 +34,6 @@ public interface ILocalType {
    * @param ID o ID a ser definido
    */
   void setID(int ID);
+
+  void menu(IPlayer player);
 }

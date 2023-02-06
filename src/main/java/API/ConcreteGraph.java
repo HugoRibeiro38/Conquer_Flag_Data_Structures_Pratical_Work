@@ -1,12 +1,17 @@
 package API;
 
+import API.Graph.PathWithWeight;
 import API.Interfaces.IConcreteGraph;
 import API.Interfaces.IGlobalSettings;
 import API.Interfaces.ILocalType;
 import API.Interfaces.IPortal;
 import com.so.Collections.Arrays.ArrayList;
+import com.so.Collections.Arrays.ArrayOrderedList;
 import com.so.Collections.Arrays.ArrayUnorderedList;
+import com.so.Collections.Arrays.SortingAndSearching;
 import com.so.Collections.Graphs.WGraph;
+import com.so.Collections.ListADT;
+import com.so.Collections.Lists.DoubleUnorderedList;
 import com.so.Collections.Map.HashMap;
 import com.so.Collections.Queues.LinkedQueue;
 import com.so.Collections.Queues.QueueADT;
@@ -29,14 +34,15 @@ public class ConcreteGraph extends WGraph<ILocalType> implements IConcreteGraph 
    *
    * @param start the start vertex
    * @param end   the end vertex
+   * @return
    */
   @Override
-  public void addRoute(int start, int end) {
-    if (start == end || super.isEmpty()) return;
+  public boolean addRoute(int start, int end) {
+    if (start == end || super.isEmpty()) return false;
 
     // Dont allow to Portals to be connected to themselves
     if (getVertex(start) instanceof IPortal && getVertex(end) instanceof IPortal) {
-      return;
+      return false;
     }
 
     int startIndex = super.getIndex(getVertex(start));
@@ -50,9 +56,10 @@ public class ConcreteGraph extends WGraph<ILocalType> implements IConcreteGraph 
         list.addToRear(end);
         routes.put(start, list);
       }
+      return true;
     }
 
-
+    return false;
   }
 
 
@@ -63,15 +70,16 @@ public class ConcreteGraph extends WGraph<ILocalType> implements IConcreteGraph 
    *
    * @param start the start vertex
    * @param end   the end vertex
+   * @return
    */
   @Override
-  public void removeRoute(int start, int end) {
-    if (start == end || super.isEmpty()) return;
+  public boolean removeRoute(int start, int end) {
+    if (start == end || super.isEmpty()) return false;
 
     int startIndex = super.getIndex(getVertex(start));
     int endIndex = super.getIndex(getVertex(end));
 
-    if (startIndex == -1 || endIndex == -1) return;
+    if (startIndex == -1 || endIndex == -1) return false;
 
     QueueADT<Integer> indices = new LinkedQueue<>() {{
       enqueue(startIndex);
@@ -97,6 +105,7 @@ public class ConcreteGraph extends WGraph<ILocalType> implements IConcreteGraph 
         }
       }
     }
+    return true;
   }
 
 
@@ -106,7 +115,7 @@ public class ConcreteGraph extends WGraph<ILocalType> implements IConcreteGraph 
    * @param id the ID of the ILocalType
    * @return Object representing the ILocalType
    */
-  private ILocalType getVertex(int id) {
+  public ILocalType getVertex(int id) {
     VerticesIterator iterator = new VerticesIterator(vertices);
     while (iterator.hasNext()) {
       ILocalType vertex = (ILocalType) iterator.next();
@@ -130,13 +139,7 @@ public class ConcreteGraph extends WGraph<ILocalType> implements IConcreteGraph 
     ILocalType vertex = getVertex(id);
     if (vertex != null) {
       super.removeVertex(vertex);
-      routes.remove(id);
     }
-  }
-
-  @Override
-  public HashMap<Integer, ArrayUnorderedList<Integer>> getRoutes() {
-    return routes;
   }
 
 
@@ -145,10 +148,95 @@ public class ConcreteGraph extends WGraph<ILocalType> implements IConcreteGraph 
     return super.djisktra(start, end);
   }
 
-  @Override
-  public ArrayList<ILocalType> findPaths(ArrayList<ILocalType> toPass, ILocalType start, ILocalType end) {
-    return super.find(toPass, start, end);
+
+  private ArrayList<PathWithWeight> findPaths(ArrayList<ILocalType> toPass, ILocalType start, ILocalType end) {
+    ArrayOrderedList<PathWithWeight> validPaths = new ArrayOrderedList();
+    Iterator var6 = this.findAllPathsWithWeight(start, end).iterator();
+
+    while (var6.hasNext()) {
+      PathWithWeight pathWithWeight = (PathWithWeight) var6.next();
+      ArrayUnorderedList<ILocalType> path = (ArrayUnorderedList) pathWithWeight.getPath();
+      boolean isValid = true;
+      Iterator var10 = toPass.iterator();
+
+      while (var10.hasNext()) {
+        ILocalType typeToPass = (ILocalType) var10.next();
+        if (!path.contains(typeToPass)) {
+          isValid = false;
+          break;
+        }
+      }
+
+      if (isValid) {
+        validPaths.add(pathWithWeight);
+      }
+    }
+
+    return validPaths;
   }
+
+  public PathWithWeight findShortestPath_WithPoints(ArrayList<ILocalType> toPass, ILocalType start, ILocalType end) {
+    return (PathWithWeight) this.findPaths(toPass, start, end).first();
+  }
+
+  private ListADT<PathWithWeight> findAllPathsWithWeight(ILocalType startVertex, ILocalType endVertex) {
+    int startIndex = this.getIndex(startVertex);
+    int endIndex = this.getIndex(endVertex);
+    boolean[] isVisited = new boolean[this.numVertices];
+    ArrayList<ILocalType> currentPath = new ArrayUnorderedList();
+    ListADT<PathWithWeight> allPaths = new ArrayUnorderedList();
+    this.findAllPathsWithWeight(startIndex, endIndex, isVisited, currentPath, allPaths, 0);
+
+    PathWithWeight[] paths = new PathWithWeight[allPaths.size()];
+    int i = 0;
+    for (int size = allPaths.size(); i < size; ++i) {
+      paths[i] = allPaths.removeFirst();
+    }
+    SortingAndSearching.mergeSort(paths, 0, paths.length - 1);
+    for (PathWithWeight path : paths)
+      ((ArrayUnorderedList) allPaths).addToRear(path);
+
+    return allPaths;
+  }
+
+  ILocalType getVertex_Pos(int pos) {
+    int i = 0;
+
+    for (VerticesIterator it = new VerticesIterator(this.vertices); it.hasNext(); ++i) {
+      ILocalType localType = (ILocalType) it.next();
+      if (pos == i) {
+        return localType;
+      }
+    }
+
+    return null;
+  }
+
+  private void findAllPathsWithWeight(int currentIndex, int endIndex, boolean[] isVisited, ListADT<ILocalType> currentPath, ListADT<PathWithWeight> allPaths, int weight) {
+    // System.out.println("INDEX" + currentIndex + " VERTEX" + this.getVertex_Pos(currentIndex));
+    ((ArrayUnorderedList) currentPath).addToRear(this.getVertex_Pos(currentIndex));
+    isVisited[currentIndex] = true;
+    if (currentIndex == endIndex) {
+      ArrayUnorderedList<ILocalType> copyPath = new ArrayUnorderedList();
+      Iterator<ILocalType> it = currentPath.iterator();
+
+      while (it.hasNext()) {
+        copyPath.addToRear((ILocalType) it.next());
+      }
+
+      ((ArrayUnorderedList) allPaths).addToRear(new PathWithWeight(copyPath, weight));
+    } else {
+      for (int i = 0; i < this.numVertices; ++i) {
+        if (this.adjMatrix[currentIndex][i] != Integer.MAX_VALUE && !isVisited[i]) {
+          this.findAllPathsWithWeight(i, endIndex, isVisited, currentPath, allPaths, weight + this.adjMatrix[currentIndex][i]);
+        }
+      }
+    }
+
+    currentPath.removeLast();
+    isVisited[currentIndex] = false;
+  }
+
 
   private static class VerticesIterator<T> implements Iterator<T> {
     private final T[] vertices;
@@ -169,6 +257,42 @@ public class ConcreteGraph extends WGraph<ILocalType> implements IConcreteGraph 
     }
   }
 
+  public HashMap<Integer, ArrayUnorderedList<Integer>> getRoutes() {
+    return routes;
+  }
+
+  public ArrayList<ILocalType> getPlaces() {
+    ArrayUnorderedList<ILocalType> places = new ArrayUnorderedList<>();
+
+    VerticesIterator iterator = new VerticesIterator(vertices);
+    while (iterator.hasNext()) {
+      ILocalType vertex = (ILocalType) iterator.next();
+      places.addToRear(vertex);
+    }
+    return places;
+  }
+
+  public ListADT<PathWithWeight> findAllPaths() {
+    DoubleUnorderedList<PathWithWeight> allPathsForAllPlaces = new DoubleUnorderedList<>();
+    for (int i = 0; i < this.numVertices; i++) {
+      for (int j = 0; j < this.numVertices; j++) {
+        if (i != j) {
+          allPathsForAllPlaces.addToRear(this.findAllPathsWithWeight(this.getVertex_Pos(i), this.getVertex_Pos(j)).first());
+        }
+      }
+    }
+    return allPathsForAllPlaces;
+  }
+
+  public void displayPlaces(ILocalType vertex) {
+    int index = this.getIndex(vertex);
+    System.out.println("Places to visit from " + vertex.getID() + ":");
+    for (int i = 0; i < this.numVertices; i++) {
+      if (this.adjMatrix[index][i] != Integer.MAX_VALUE) {
+        System.out.println(this.getVertex_Pos(i));
+      }
+    }
+  }
 
 }
 

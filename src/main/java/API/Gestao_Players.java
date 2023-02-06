@@ -2,10 +2,20 @@ package API;
 
 import API.Enums.TeamType;
 import API.Interfaces.IPlayer;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.so.Collections.Arrays.ArrayUnorderedList;
 import com.so.Collections.Arrays.SortingAndSearching;
 import com.so.Collections.ListADT;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Iterator;
 import java.util.Scanner;
 
@@ -51,10 +61,12 @@ public class Gestao_Players {
       case 2:
         System.out.println("Insert the new team");
         for (TeamType team : TeamType.values()) {
-          System.out.println(team);
+          System.out.println(team.ordinal() + " " + team);
         }
-        String team = sc.next();
-        player.setTeam(TeamType.valueOf(team));
+        int team = sc.nextInt();
+        //Only setTeam if the integer is in range
+        if (team >= 0 && team < TeamType.values().length)
+          player.setTeam(TeamType.values()[team]);
         break;
       default:
         System.out.println("Invalid option");
@@ -71,7 +83,7 @@ public class Gestao_Players {
     }
 
     Iterator<IPlayer> it = temp_players.iterator();
-    while (it.hasNext() && new SortingAndSearching().binarySearch(players, 0, temp_players.size(), name)) {
+    while (it.hasNext()) {
       IPlayer player = it.next();
       if (name.equals(player.getName())) {
         it.remove();
@@ -81,38 +93,113 @@ public class Gestao_Players {
     return null;
   }
 
-// Make menus with the methods above
 
-
-  //CHANGE TO DO WHILE MENU
   public static void menu() {
-    System.out.println("1.Add player 2.Remove player 3.Update player 4.Exit");
-    Scanner sc = new Scanner(System.in);
-    int option = sc.nextInt();
-    switch (option) {
-      case 1:
-        System.out.println("Insert the name of the player");
-        String name = sc.next();
-        System.out.println("Insert the team of the player");
-        for (TeamType team : TeamType.values()) {
-          System.out.println(team+" ");
-        }
-        String team = sc.next();
-        addPlayer(name, team);
-        break;
-      case 2:
-        String name1 = goTroughPlayers(SimulatePlay.players, "Choose the player to remove");
-        removePlayer(name1);
-        break;
-      case 3:
-        updatePlayer(SimulatePlay.players);
-        break;
-      case 4:
-        return;
-      default:
-        System.out.println("Invalid option");
+    int option;
+    do {
+      System.out.println("1.Add player 2.Remove player 3.Update player 4.List Players 5.Export Players into File 6.Import Players from File 0.Exit");
+      Scanner sc = new Scanner(System.in);
+      option = sc.nextInt();
+      switch (option) {
+        case 1:
+          System.out.println("Insert the name of the player");
+          String name = sc.next();
+          addPlayer(name, TeamType.NEUTRAL.toString());
+          break;
+        case 2:
+          String name1 = goTroughPlayers(SimulatePlay.players, "Choose the player to remove");
+          removePlayer(name1);
+          break;
+        case 3:
+          updatePlayer(SimulatePlay.players);
+          break;
+        case 4:
+          listPlayers();
+          break;
+        case 5:
+          exportPlayers();
+          break;
+        case 6:
+          importPlayers();
+          break;
+        case 0:
+          break;
+        default:
+          System.out.println("Invalid option");
+      }
+    } while (option != 0);
+  }
+
+  //List all the players by level and by team and number of portals currently controlled by each player
+
+  public static void listPlayers() {
+    ArrayUnorderedList<IPlayer> temp_players = (ArrayUnorderedList<IPlayer>) SimulatePlay.players;
+    IPlayer[] players = new IPlayer[temp_players.size()];
+    int i = 0;
+    for (IPlayer player : temp_players) {
+      players[i++] = player;
     }
-    menu();
+    SortingAndSearching.bubbleSort(players);
+    for (IPlayer player : players) {
+      System.out.println(player.toString());
+    }
+  }
+
+
+  //Do a export function using Gson to export the players to a json file
+  public static void exportPlayers() {
+    Gson gson = new Gson();
+    Iterator<IPlayer> it = SimulatePlay.players.iterator();
+    JSONObject json = new JSONObject();
+    JSONArray playersArray = new JSONArray();
+    while (it.hasNext()) {
+      playersArray.add(gson.toJsonTree(it.next()));
+    }
+
+    json.put("players", playersArray);
+    try {
+      FileReader fileReader = new FileReader("game.json");
+      JSONParser jsonParser = new JSONParser();
+      JSONObject existingJson = (JSONObject) jsonParser.parse(fileReader);
+      fileReader.close();
+
+      existingJson.put("players", playersArray);
+      FileWriter fileWriter = new FileWriter("game.json");
+      fileWriter.write(existingJson.toJSONString());
+      fileWriter.close();
+    } catch (IOException | org.json.simple.parser.ParseException e) {
+      try {
+        FileWriter fileWriter = new FileWriter("game.json");
+        fileWriter.write(json.toJSONString());
+        fileWriter.close();
+      } catch (IOException ex) {
+        throw new RuntimeException(ex);
+      }
+    }
+  }
+
+  //Do a import function using Gson to import the players from a json file
+  public static void importPlayers() {
+    if (!SimulatePlay.players.isEmpty()) {
+      return;
+    }
+    Gson gson = new Gson();
+    ArrayUnorderedList<IPlayer> players = new ArrayUnorderedList<>();
+    try {
+      FileReader fileReader = new FileReader("Game.json");
+      JsonObject json = gson.fromJson(fileReader, JsonObject.class);
+      fileReader.close();
+
+      JsonArray playersArray = json.get("players").getAsJsonArray();
+      for (JsonElement playerElement : playersArray) {
+        JsonObject playerObject = playerElement.getAsJsonObject();
+        Player player = gson.fromJson(playerObject, Player.class);
+        players.addToRear(player);
+      }
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    }
+    SimulatePlay.players = players;
   }
 
 

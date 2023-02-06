@@ -3,7 +3,10 @@ package API;
 import API.Abstractions.AGameSettings;
 import API.Enums.LocalType;
 import API.Interfaces.IConnector;
+import API.Interfaces.IPlayer;
 import com.so.Collections.Map.HashMap;
+
+import java.util.Scanner;
 
 public class Connector extends Local implements IConnector {
   private static final int DEFAULT_SIZE = 20;
@@ -14,22 +17,24 @@ public class Connector extends Local implements IConnector {
   private static final int DEFAULT_ENERGY = (int) (Math.random() * (maxEnergy - minEnergy + 1)) + minEnergy;
   private final AGameSettings gameSettings;
 
-  public HashMap<Player, Integer> players = new HashMap<>(DEFAULT_SIZE);
+  public HashMap<IPlayer, Integer> players = new HashMap<>(DEFAULT_SIZE);
 
 
   /**
    * Guardar num HashMap os jogadores que ja carregaram no connector para inibilos de carregar energia antes do CoolDown_Timer.
    */
 
-  public void reload_energy(Player player) {
+  public void reload_energy(IPlayer player) {
     int time = SimulatePlay.getTime();
-    if (players.containsKey(player) && ((time - players.get(player)) < getCoolDownTimer())) {
+    if (players.isEmpty() || (players.containsKey(player) && ((time - players.get(player)) < getCoolDownTimer()))) {
       return;
     }
     int energyToBeReloaded = Math.min(this.gameSettings.getEnergy(), player.getDefaultEnergy() - player.getCurrentEnergy());
     player.setCurrentEnergy(player.getCurrentEnergy() + energyToBeReloaded);
     player.setExperiencePoints(player.getExperiencePoints() + GlobalSettings.reloadEnergyInConnector);
+    player.getLevel();
     players.put(player, time);
+    System.out.println("Player " + player.getName() + " reloaded with " + energyToBeReloaded + " energy");
   }
 
 
@@ -71,8 +76,8 @@ public class Connector extends Local implements IConnector {
     return (GameSettings) gameSettings;
   }
 
-  private class GameSettings extends AGameSettings {
-    private final int cooldownTimer;
+  public class GameSettings extends AGameSettings {
+    private int cooldownTimer;
 
     public GameSettings(int cooldownTimer, int energy) {
       super(energy);
@@ -87,6 +92,15 @@ public class Connector extends Local implements IConnector {
 
     public int getCooldownTimer() {
       return this.cooldownTimer;
+    }
+
+
+    public void setEnergy(int energy) {
+      super.setEnergy(energy);
+    }
+
+    public void setCooldownTimer(int cooldownTimer) {
+      this.cooldownTimer = cooldownTimer;
     }
 
     @Override
@@ -108,5 +122,23 @@ public class Connector extends Local implements IConnector {
         ", ID=" + ID +
         ", localType=" + localType +
         '}';
+  }
+
+  @Override
+  public void menu(IPlayer player) {
+    System.out.println("1 - Reload Energy");
+    System.out.println("2 - Back");
+    Scanner scanner = new Scanner(System.in);
+    int option = scanner.nextInt();
+    switch (option) {
+      case 1:
+        reload_energy(player);
+        break;
+      case 2:
+        break;
+      default:
+        System.out.println("Invalid option");
+        break;
+    }
   }
 }

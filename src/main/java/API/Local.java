@@ -3,6 +3,7 @@ package API;
 import API.Enums.LocalType;
 import API.Interfaces.ICoordinate;
 import API.Interfaces.ILocalType;
+import API.Interfaces.IPlayer;
 
 public class Local implements ILocalType {
 
@@ -41,6 +42,11 @@ public class Local implements ILocalType {
   @Override
   public void setID(int ID) {
     this.ID = ID;
+  }
+
+  @Override
+  public void menu(IPlayer player) {
+    throw new UnsupportedOperationException("Not implemented yet");
   }
 
   /**

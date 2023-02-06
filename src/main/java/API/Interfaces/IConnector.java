@@ -12,7 +12,7 @@ public interface IConnector extends ILocalType {
      *
      * @param player player cuja energia irá ser carregada
      */
-    void reload_energy(Player player);
+    void reload_energy(IPlayer player);
 
     /**
      * Retorna o cooldowntimer de um connector.
