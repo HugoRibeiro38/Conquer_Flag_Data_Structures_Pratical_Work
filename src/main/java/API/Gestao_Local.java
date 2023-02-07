@@ -235,7 +235,7 @@ public class Gestao_Local {
     }
   }
 
-  private static void importLocals() {
+  protected static void importLocals() {
 
     if (!SimulatePlay.graph.isEmpty()) {
       System.out.println("There are already locals in the program");

@@ -129,4 +129,10 @@ public class SimulatePlay {
   }
 
 
+  public void loadFile() {
+    Gestao_Local.importLocals();
+    Gestao_Players.importPlayers();
+    Gestao_Rotas.importarRotas();
+  }
+
 }

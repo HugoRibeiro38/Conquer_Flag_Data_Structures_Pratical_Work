@@ -83,7 +83,7 @@ public class Main {
     Scanner sc = new Scanner(System.in);
     do {
       System.out.println("Choose an option:\n" +
-          " 1.Gestao_Jogo 2.Gestao_Players 3.Gestao_Local 4.Gestao_Rotas 5.Simulate Play 0.STOP");
+          " 1.Gestao_Jogo 2.Gestao_Players 3.Gestao_Local 4.Gestao_Rotas 5.Simulate Play 6.Load File 0.STOP");
       option = sc.nextInt();
       switch (option) {
         case 1:
@@ -101,6 +101,11 @@ public class Main {
         case 5:
           SimulatePlay jogar = new SimulatePlay();
           jogar.play();
+          break;
+        case 6:
+          SimulatePlay loadFile = new SimulatePlay();
+          loadFile.loadFile();
+          break;
         case 0:
           break;
         default:
