@@ -185,7 +185,7 @@ public class Connector extends Local implements IConnector {
    * <p>
    *   O jogador pode recarregar a sua energia no Connector
    *   O jogador pode voltar atrás no menu principal
-   * @param player
+   * @param player jogador que vai realizar a ação
    */
   @Override
   public void menu(IPlayer player) {
