@@ -57,18 +57,18 @@ public class Main {
     //graph.removePlace(1);
     //System.out.println(graph.toString());
     // System.out.println(graph.djistkra(portal, portal1));
-    //Gestao_Players.addPlayer("Hugo", "Giants");
-    //Gestao_Players.addPlayer("João", "Sparks");
-    //Gestao_Players.removePlayer();
+    //Manage_Players.addPlayer("Hugo", "Giants");
+    //Manage_Players.addPlayer("João", "Sparks");
+    //Manage_Players.removePlayer();
     ArrayUnorderedList<ILocalType> topass = new ArrayUnorderedList<>() {{
       addToRear(portal1);
     }};
     //System.out.println(graph.findAllPaths());
     //System.out.println("TOPASS "+graph.findShortestPath_WithPoints(topass, portal, portal1));
 
-    //Gestao_Local.menu();
+    //Manage_Local.menu();
     //System.out.println(SimulatePlay.graph.getRoutes().size());
-    //  Gestao_Players.menu();
+    //  Manage_Players.menu();
 
     //SimulatePlay.graph = graph;
     //SimulatePlay.players = players;
@@ -78,25 +78,25 @@ public class Main {
      * MENU PARA SER USADO
      * */
 
-    //Menu para Gestao_Jogo,Gestao_Players,Gestao_Local,Gestao_Rotas
+    //Menu para Manage_Game,Manage_Players,Manage_Local,Manage_Routes
     int option;
     Scanner sc = new Scanner(System.in);
     do {
       System.out.println("Choose an option:\n" +
-          " 1.Gestao_Jogo 2.Gestao_Players 3.Gestao_Local 4.Gestao_Rotas 5.Simulate Play 6.Load File  7.Export File 0.STOP");
+          " 1.Manage_Game 2.Manage_Players 3.Manage_Local 4.Manage_Routes 5.Simulate Play 6.Load File  7.Export File 0.STOP");
       option = sc.nextInt();
       switch (option) {
         case 1:
-          Gestao_Jogo.menu();
+          Manage_Game.menu();
           break;
         case 2:
-          Gestao_Players.menu();
+          Manage_Players.menu();
           break;
         case 3:
-          Gestao_Local.menu();
+          Manage_Local.menu();
           break;
         case 4:
-          Gestao_Rotas.menu();
+          Manage_Routes.menu();
           break;
         case 5:
           SimulatePlay jogar = new SimulatePlay();

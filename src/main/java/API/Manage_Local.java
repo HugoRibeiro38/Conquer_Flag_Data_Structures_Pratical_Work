@@ -17,7 +17,7 @@ import java.util.Scanner;
  * remover um local, listar todos os locais, exportar todos os locais para um ficheiro JSON,
  * e importar todos os locais de um ficheiro JSON.
  */
-public class Gestao_Local {
+public class Manage_Local {
 
   /**
    * Método que permite ao utilizador adicionar um novo local, editar um local, remover um local,

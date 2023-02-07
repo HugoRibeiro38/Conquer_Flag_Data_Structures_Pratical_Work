@@ -22,7 +22,7 @@ import java.util.Scanner;
 /**
  * Classe que gere os jogadores.
  */
-public class Gestao_Players {
+public class Manage_Players {
 
 
   /**

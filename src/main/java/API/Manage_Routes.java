@@ -10,7 +10,7 @@ import java.util.Scanner;
 /**
  * Classe que permite ao utilizador gerir as rotas
  */
-public class Gestao_Rotas {
+public class Manage_Routes {
   /**
    * Menu que permite ao utilizador gerir as rotas
    * O utilizador pode criar uma rota, remover uma rota ou exportar as rotas
@@ -28,13 +28,13 @@ public class Gestao_Rotas {
       opcao = sc.nextInt();
       switch (opcao) {
         case 1:
-          criarRota();
+          createRoute();
           break;
         case 2:
-          removerRota();
+          removeRoute();
           break;
         case 3:
-          exportarRotas();
+          exportRoutes();
           break;
         case 0:
           break;
@@ -51,7 +51,7 @@ public class Gestao_Rotas {
    * Caso o ID de um dos locais não exista, é mostrada uma mensagem de erro
    * Caso a rota seja criada com sucesso, é mostrada uma mensagem de sucesso
    */
-  public static void criarRota() {
+  public static void createRoute() {
     Scanner sc = new Scanner(System.in);
     System.out.println("Insira o ID do primeiro local");
     int id1 = sc.nextInt();
@@ -69,7 +69,7 @@ public class Gestao_Rotas {
    * O utilizador é obrigado a inserir o ID de dois locais
    * Caso o ID de um dos locais não exista, é mostrada uma mensagem de erro
    */
-  public static void removerRota() {
+  public static void removeRoute() {
     Scanner sc = new Scanner(System.in);
     System.out.println("Insira o ID do primeiro local");
     int id1 = sc.nextInt();
@@ -86,7 +86,7 @@ public class Gestao_Rotas {
    * Função que permite ao utilizador exportar as rotas para um ficheiro
    * O ficheiro é guardado no formato JSON
    */
-  public static void exportarRotas() {
+  public static void exportRoutes() {
     Gson gson = new Gson();
     HashMap<Integer, ArrayUnorderedList<Integer>> routes = SimulatePlay.getGraph().getRoutes();
     String json = "{\"routes\":[";
@@ -128,7 +128,7 @@ public class Gestao_Rotas {
    * Caso o grafo esteja vazio, é mostrada uma mensagem de erro
    * Caso o ficheiro não exista, é mostrada uma mensagem de erro
    */
-  public static void importarRotas() {
+  public static void importRoutes() {
     if (SimulatePlay.getGraph().isEmpty()) {
       System.out.println("Não existem locais para criar rotas");
       System.out.println("Por favor crie/importe locais primeiro");

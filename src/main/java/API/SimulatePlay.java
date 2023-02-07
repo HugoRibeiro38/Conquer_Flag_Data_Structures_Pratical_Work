@@ -169,18 +169,18 @@ public class SimulatePlay implements ISimulatePlay {
    * Método que permite carregar a informaçao contida nos ficheiros para as estruturas de dados.
    */
   public void loadFile() {
-    Gestao_Local.importLocals();
-    Gestao_Players.importPlayers();
-    Gestao_Rotas.importarRotas();
+    Manage_Local.importLocals();
+    Manage_Players.importPlayers();
+    Manage_Routes.importRoutes();
   }
 
   /**
    * Método que permite guardar os dados das estruturas de dados para os ficheiros.
    */
   public void saveFile() {
-    Gestao_Local.exportLocals();
-    Gestao_Players.exportPlayers();
-    Gestao_Rotas.exportarRotas();
+    Manage_Local.exportLocals();
+    Manage_Players.exportPlayers();
+    Manage_Routes.exportRoutes();
   }
 
 }

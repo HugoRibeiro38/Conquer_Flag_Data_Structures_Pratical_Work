@@ -16,7 +16,7 @@ import java.util.Scanner;
  * o caminho mais curto entre dois locais tendo que passar por um local,
  * e exportar todos os caminhos possíveis entre dois locais.
  */
-public class Gestao_Jogo {
+public class Manage_Game {
 
   /**
    * Método que permite ao utilizador obter o caminho mais curto entre dois locais.
@@ -35,13 +35,13 @@ public class Gestao_Jogo {
       option = sc.nextInt();
       switch (option) {
         case 1:
-          CaminhoMaisCurto();
+          ShortestPath();
           break;
         case 2:
-          CaminhoMaisCurto_tendoquepassarpor();
+          ShortestPath_HavingToPassTrough();
           break;
         case 3:
-          exportCaminhos();
+          exportPaths();
           break;
         case 0:
           break;
@@ -59,7 +59,7 @@ public class Gestao_Jogo {
    * Caso não exista caminho entre os dois locais, é mostrada uma mensagem de erro.
    * Caso exista caminho entre os dois locais, é mostrado o caminho mais curto entre os dois locais.
    */
-  private static void CaminhoMaisCurto() {
+  private static void ShortestPath() {
     for (ILocalType place : SimulatePlay.getGraph().getPlaces()) {
       System.out.println(place);
     }
@@ -92,7 +92,7 @@ public class Gestao_Jogo {
    * Caso não exista caminho entre os dois locais, é mostrada uma mensagem de erro.
    * Caso exista caminho entre os dois locais, é mostrado o caminho mais curto entre os dois locais.
    */
-  private static void CaminhoMaisCurto_tendoquepassarpor() {
+  private static void ShortestPath_HavingToPassTrough() {
     for (ILocalType place : SimulatePlay.getGraph().getPlaces()) {
       System.out.println(place);
     }
@@ -130,7 +130,7 @@ public class Gestao_Jogo {
    * Método que permite ao utilizador exportar todos os caminhos possíveis entre os locais.
    * É criado um ficheiro JSON com todos os caminhos possíveis entre os locais, junto com o peso de cada caminho.
    */
-  private static void exportCaminhos() {
+  private static void exportPaths() {
     JsonArray array = new JsonArray();
     for (PathWithWeight path : SimulatePlay.getGraph().findAllPaths()) {
       array.add(path.toJson());
@@ -138,7 +138,7 @@ public class Gestao_Jogo {
     JsonObject object = new JsonObject();
     object.add("PossiblePaths", array);
     try {
-      FileWriter file = new FileWriter("CaminhoMaisCurto.json");
+      FileWriter file = new FileWriter("ShortestPath.json");
       file.write(object.toString());
       file.close();
     } catch (IOException e) {
