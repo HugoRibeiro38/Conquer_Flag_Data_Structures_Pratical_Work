@@ -17,7 +17,7 @@ public class ConnectorTest {
     @Test
     public void ConnectorTestT01() {
         Connector connector = new Connector(1, 2);
-        assertEquals(5, connector.getCoolDownTimer());
+        assertEquals(5, connector.getGameSettings().getCooldownTimer());
         assertEquals(LocalType.CONNECTOR, connector.getType());
         assertEquals(1, connector.getID());
         assertEquals(1, connector.getCoordinates().getLatitude());
@@ -31,7 +31,7 @@ public class ConnectorTest {
     public void ConnectorTestT02() {
         Connector connector = new Connector(4, 4, 200, 10);
         String expectedForToString = "Connector{gameSettings=GameSettings{energy=200, cooldownTimer=10}, latitude=4.0, longitude=4.0, ID=2, localType=CONNECTOR}";
-        assertEquals(10, connector.getCoolDownTimer());
+        assertEquals(10, connector.getGameSettings().getCooldownTimer());
         assertEquals(LocalType.CONNECTOR, connector.getType());
         assertEquals(expectedForToString, connector.toString());
         assertEquals(2, connector.getID());

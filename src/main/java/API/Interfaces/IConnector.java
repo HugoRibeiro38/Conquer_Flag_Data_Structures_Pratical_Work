@@ -19,6 +19,5 @@ public interface IConnector extends ILocalType {
      *
      * @return o valor do cooldowntimer
      */
-    int getCoolDownTimer();
 
 }

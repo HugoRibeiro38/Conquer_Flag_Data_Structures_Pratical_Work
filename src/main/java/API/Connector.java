@@ -8,6 +8,13 @@ import com.so.Collections.Map.HashMap;
 
 import java.util.Scanner;
 
+/**
+ * Classe que representa um connector no jogo
+ * <p>
+ *   Um connector é um local que permite aos jogadores recarregarem a sua energia
+ *   Um connector tem um Cooldown Timer que impede os jogadores de recarregarem a sua energia demasiadas vezes
+ *   Um connector tem um limite de energia que os jogadores podem recarregar
+ */
 public class Connector extends Local implements IConnector {
   private static final int DEFAULT_SIZE = 20;
   private static final int DEFAULT_COOLDOWN_TIMER = 5;
@@ -17,16 +24,23 @@ public class Connector extends Local implements IConnector {
   private static final int DEFAULT_ENERGY = (int) (Math.random() * (maxEnergy - minEnergy + 1)) + minEnergy;
   private final AGameSettings gameSettings;
 
-  public HashMap<IPlayer, Integer> players = new HashMap<>(DEFAULT_SIZE);
+  private HashMap<IPlayer, Integer> players = new HashMap<>(DEFAULT_SIZE);
 
 
   /**
-   * Guardar num HashMap os jogadores que ja carregaram no connector para inibilos de carregar energia antes do CoolDown_Timer.
+   * Metodo que permite ao jogador recarregar a sua energia
+   * <p>
+   *   O jogador só pode recarregar a sua energia se o cooldown timer tiver passado
+   *   O jogador só pode recarregar a sua energia até ao máximo de energia do connector
+   *   O jogador tem pontos de experiencia por recarregar a sua energia
+   *   É guardado o tempo em que o jogador recarregou a sua energia
+   *   É mostrado no ecrã que o jogador recarregou a sua energia, com a quantidade de energia recarregada
+   *
+   * @param player player que vai recarregar a sua energia
    */
-
   public void reload_energy(IPlayer player) {
     int time = SimulatePlay.getTime();
-    if (players.isEmpty() || (players.containsKey(player) && ((time - players.get(player)) < getCoolDownTimer()))) {
+    if (players.isEmpty() || (players.containsKey(player) && ((time - players.get(player)) < getGameSettings().getCooldownTimer()))) {
       return;
     }
     int energyToBeReloaded = Math.min(this.gameSettings.getEnergy(), player.getDefaultEnergy() - player.getCurrentEnergy());
@@ -67,42 +81,80 @@ public class Connector extends Local implements IConnector {
     super.localType = LocalType.CONNECTOR;
   }
 
-  public int getCoolDownTimer() {
-    GameSettings gameSettings = (GameSettings) this.gameSettings;
-    return gameSettings.getCooldownTimer();
-  }
-
+  /**
+   * Metodo que retorna a classe GameSettings do connector
+   * <p>
+   *   GameSettings é uma classe que contem as configurações do jogo
+   *   GameSettings contem o cooldown timer e a energia do connector
+   *
+   * @return GameSettings do connector
+   */
   public GameSettings getGameSettings() {
     return (GameSettings) gameSettings;
   }
 
+  /**
+   * Inner class que representa as configurações do Connector
+   * <p>
+   *   GameSettings é uma classe que contem as configurações do jogo
+   *   GameSettings contem o cooldown timer e a energia do connector
+   */
   public class GameSettings extends AGameSettings {
     private int cooldownTimer;
 
+    /**
+     * Construtor de GameSettings
+     * <p>
+     *   O cooldown timer é o tempo que o jogador tem de esperar para poder recarregar a sua energia novamente
+     *   O cooldown timer está definido no ficheiro de configuração (GameSettings)
+     *   A energia é o valor máximo de energia que o jogador pode recarregar no connector
+     *   A energia está definida no ficheiro de configuração (GameSettings)
+     *
+     * @param cooldownTimer Tempo de espera para o jogador poder carregar no Connector novamente
+     * @param energy        Energia do Connector
+     */
     public GameSettings(int cooldownTimer, int energy) {
       super(energy);
       this.cooldownTimer = cooldownTimer;
     }
 
+    /**
+     * Metodo que retorna a energia do connector
+     * @return energia do connector
+     */
     @Override
     public int getEnergy() {
       return super.getEnergy();
     }
 
-
+    /**
+     * Metodo que retorna o cooldown timer do connector
+     * @return cooldown timer do connector
+     */
     public int getCooldownTimer() {
       return this.cooldownTimer;
     }
 
-
+    /**
+     * Metodo que permite alterar a energia do connector
+     * @param energy nova energia do connector
+     */
     public void setEnergy(int energy) {
       super.setEnergy(energy);
     }
 
+    /**
+     * Metodo que permite alterar o cooldown timer do connector
+     * @param cooldownTimer novo cooldown timer do connector
+     */
     public void setCooldownTimer(int cooldownTimer) {
       this.cooldownTimer = cooldownTimer;
     }
 
+    /**
+     * Metodo que retorna uma string com as informações do GameSettings
+     * @return String com as informações do GameSettings
+     */
     @Override
     public String toString() {
       return "GameSettings{" +
@@ -113,6 +165,10 @@ public class Connector extends Local implements IConnector {
 
   }
 
+  /**
+   * Metodo que retorna uma string com as informações do Connector
+   * @return String com as informações do Connector
+   */
   @Override
   public String toString() {
     return "Connector{" +
@@ -124,6 +180,13 @@ public class Connector extends Local implements IConnector {
         '}';
   }
 
+  /**
+   * Metodo que permite um jogador realizar uma ação no Connector
+   * <p>
+   *   O jogador pode recarregar a sua energia no Connector
+   *   O jogador pode voltar atrás no menu principal
+   * @param player
+   */
   @Override
   public void menu(IPlayer player) {
     System.out.println("1 - Reload Energy");
