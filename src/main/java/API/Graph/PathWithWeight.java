@@ -9,6 +9,14 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.so.Collections.ListADT;
 
+/**
+ * Classe que representa um caminho com o seu peso
+ * <p>
+ *   Esta classe é utilizada para representar um caminho com o seu peso
+ *   no grafo.
+ *   Esta classe implementa a interface Comparable para que possa ser
+ *   comparada com outras instâncias desta classe.
+ */
 public class PathWithWeight implements Comparable<PathWithWeight> {
   @SerializedName("path")
   @Expose
@@ -17,67 +25,88 @@ public class PathWithWeight implements Comparable<PathWithWeight> {
   @Expose
   int weight;
 
+  /**
+   * Construtor da classe PathWithWeight
+   * @param path caminho
+   * @param weight peso do caminho
+   */
   public PathWithWeight(ListADT<ILocalType> path, int weight) {
     this.path = path;
     this.weight = weight;
   }
 
+  /**
+   * Método que nos retorna o caminho
+   * @return caminho
+   */
   public ListADT<ILocalType> getPath() {
     return this.path;
   }
 
+  /**
+   * Método que nos retorna o peso do caminho
+   * @return peso do caminho
+   */
   public int getWeight() {
     return this.weight;
   }
 
+  /**
+   * Método que devolve uma representação em String do caminho com o seu peso
+   * @return representação em String do caminho com o seu peso
+   */
   public String toString() {
     return "PathWithWeight{path=" + this.path + ", weight=" + this.weight + '}';
   }
 
   /**
-   * Compares this object with the specified object for order.  Returns a
-   * negative integer, zero, or a positive integer as this object is less
-   * than, equal to, or greater than the specified object.
+   * Compara este objeto com o objeto especificado para pedido. Retorna um
+   * inteiro negativo, zero ou um inteiro positivo, pois este objeto é menor
+   * que, igual ou maior que o objeto especificado.
    *
-   * <p>The implementor must ensure
+   * <p>O implementador deve garantir
    * {@code sgn(x.compareTo(y)) == -sgn(y.compareTo(x))}
-   * for all {@code x} and {@code y}.  (This
-   * implies that {@code x.compareTo(y)} must throw an exception iff
-   * {@code y.compareTo(x)} throws an exception.)
+   * para todos os {@code x} e {@code y}. (Esse
+   * implica que {@code x.compareTo(y)} deve lançar uma exceção iff
+   * {@code y.compareTo(x)} lança uma exceção.)
    *
-   * <p>The implementor must also ensure that the relation is transitive:
-   * {@code (x.compareTo(y) > 0 && y.compareTo(z) > 0)} implies
+   * <p>O implementador também deve garantir que a relação seja transitiva:
+   * {@code (x.compareTo(y) > 0 && y.compareTo(z) > 0)} implica
    * {@code x.compareTo(z) > 0}.
    *
-   * <p>Finally, the implementor must ensure that {@code x.compareTo(y)==0}
-   * implies that {@code sgn(x.compareTo(z)) == sgn(y.compareTo(z))}, for
-   * all {@code z}.
+   * <p>Finalmente, o implementador deve garantir que {@code x.compareTo(y)==0}
+   * implica que {@code sgn(x.compareTo(z)) == sgn(y.compareTo(z))}, para
+   * todos {@code z}.
    *
-   * <p>It is strongly recommended, but <i>not</i> strictly required that
-   * {@code (x.compareTo(y)==0) == (x.equals(y))}.  Generally speaking, any
-   * class that implements the {@code Comparable} interface and violates
-   * this condition should clearly indicate this fact.  The recommended
-   * language is "Note: this class has a natural ordering that is
-   * inconsistent with equals."
+   * <p>É fortemente recomendado, mas <i>não</i> estritamente necessário que
+   * {@code (x.compareTo(y)==0) == (x.equals(y))}. De um modo geral, qualquer
+   * classe que implementa a interface {@code Comparable} e viola
+   * esta condição deve indicar claramente este fato. O recomendado
+   * language é "Nota: esta classe tem uma ordem natural que é
+   * inconsistente com iguais."
    *
-   * <p>In the foregoing description, the notation
-   * {@code sgn(}<i>expression</i>{@code )} designates the mathematical
-   * <i>signum</i> function, which is defined to return one of {@code -1},
-   * {@code 0}, or {@code 1} according to whether the value of
-   * <i>expression</i> is negative, zero, or positive, respectively.
+   * <p>Na descrição anterior, a notação
+   * {@code sgn(}<i>expression</i>{@code )} designa a matemática
+   * Função <i>signum</i>, que é definida para retornar um dos {@code -1},
+   * {@code 0} ou {@code 1} conforme o valor de
+   * <i>expressão</i> é negativo, zero ou positivo, respectivamente.
    *
-   * @param o the object to be compared.
-   * @return a negative integer, zero, or a positive integer as this object
-   * is less than, equal to, or greater than the specified object.
-   * @throws NullPointerException if the specified object is null
-   * @throws ClassCastException   if the specified object's type prevents it
-   *                              from being compared to this object.
+   * @param o objeto a ser comparado.
+   * @return um inteiro negativo, zero ou um inteiro positivo como este objeto
+   * é menor, igual ou maior que o objeto especificado.
+   * @throws NullPointerException se o objeto especificado for nulo
+   * @throws ClassCastException se o tipo do objeto especificado o impedir
+   * de ser comparado a este objeto.
    */
   @Override
   public int compareTo(PathWithWeight o) {
     return Integer.compare(this.weight, o.weight);
   }
 
+  /**
+   * Método que devolve uma representação em Json do caminho com o seu peso
+   * @return representação em Json do caminho com o seu peso
+   */
   public JsonObject toJson() {
     Gson gson = new Gson();
     JsonObject jsonObject = new JsonObject();
