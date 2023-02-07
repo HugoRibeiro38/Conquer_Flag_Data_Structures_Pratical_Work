@@ -4,6 +4,7 @@ import API.Interfaces.ILocalType;
 import API.Interfaces.IPlayer;
 import com.so.Collections.Arrays.ArrayUnorderedList;
 import com.so.Collections.ListADT;
+import com.so.Collections.Lists.LinkedList;
 import com.so.Collections.Map.HashMap;
 
 import java.util.Iterator;
@@ -64,14 +65,20 @@ public class SimulatePlay {
       option = sc.nextInt();
       switch (option) {
         case 1:
-          graph.displayPlaces(currentPlace);
+          LinkedList<ILocalType> places_move = (LinkedList<ILocalType>) graph.displayPlaces(currentPlace);
           System.out.println("ID of the place you want to move to:");
           int id = sc.nextInt();
+
+
           ILocalType newPlace = graph.getVertex(id);
           if (newPlace == null) {
             System.out.println("Invalid ID");
             break;
+          } else if (!places_move.contains(newPlace)) {
+            System.out.println("You can't move to that place");
+            break;
           }
+          System.out.println("Moving to " + newPlace.getID());
           playerLocation.put(currentPlayer, newPlace);
           incrementTime();
           break;

@@ -12,6 +12,7 @@ import com.so.Collections.Arrays.SortingAndSearching;
 import com.so.Collections.Graphs.WGraph;
 import com.so.Collections.ListADT;
 import com.so.Collections.Lists.DoubleUnorderedList;
+import com.so.Collections.Lists.LinkedList;
 import com.so.Collections.Map.HashMap;
 import com.so.Collections.Queues.LinkedQueue;
 import com.so.Collections.Queues.QueueADT;
@@ -284,14 +285,17 @@ public class ConcreteGraph extends WGraph<ILocalType> implements IConcreteGraph 
     return allPathsForAllPlaces;
   }
 
-  public void displayPlaces(ILocalType vertex) {
+  public ListADT<ILocalType> displayPlaces(ILocalType vertex) {
+    LinkedList<ILocalType> places = new LinkedList<>();
     int index = this.getIndex(vertex);
     System.out.println("Places to visit from " + vertex.getID() + ":");
     for (int i = 0; i < this.numVertices; i++) {
       if (this.adjMatrix[index][i] != Integer.MAX_VALUE) {
         System.out.println(this.getVertex_Pos(i));
+        places.add(this.getVertex_Pos(i));
       }
     }
+    return places;
   }
 
 }
