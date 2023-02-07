@@ -12,9 +12,22 @@ import com.so.Collections.Arrays.SortingAndSearching;
 import java.io.*;
 import java.util.Scanner;
 
+/**
+ * Classe que possui métodos que permitem o utilizador, adicionar um novo local, editar um local,
+ * remover um local, listar todos os locais, exportar todos os locais para um ficheiro JSON,
+ * e importar todos os locais de um ficheiro JSON.
+ */
 public class Gestao_Local {
 
-  //Make menu that allows the user to add a new local, edit and remove a local
+  /**
+   * Método que permite ao utilizador adicionar um novo local, editar um local, remover um local,
+   * listar todos os locais, exportar todos os locais para um ficheiro JSON,
+   * e importar todos os locais de um ficheiro JSON.
+   * O utilizador é obrigado a inserir um número que corresponde a uma das opções.
+   * Caso o número inserido não corresponda a nenhuma das opções, é mostrada uma mensagem de erro.
+   * Caso o número inserido corresponda a uma das opções, é executada a opção correspondente.
+   * Caso o utilizador insira o número 0, o menu é fechado.
+   */
   public static void menu() {
     int option;
     do {
@@ -50,7 +63,13 @@ public class Gestao_Local {
   }
 
 
-  //Make menu that allows the user to add a new local
+  /**
+   * Método que permite ao utilizador adicionar um novo local.
+   * O utilizador é obrigado a inserir um número que corresponde ao tipo de local que pretende adicionar.
+   * Caso o número inserido não corresponda a nenhuma das opções, é mostrada uma mensagem de erro.
+   * Caso o número inserido corresponda a uma das opções, é executada a opção correspondente.
+   *
+   */
   private static void addLocal() {
 
     //Longitudinal and latitudinal coordinates
@@ -79,27 +98,33 @@ public class Gestao_Local {
         int energy = sc.nextInt();
         System.out.println("Insert the cooldown timer of the connector");
         int cooldownTimer = sc.nextInt();
-        SimulatePlay.graph.addPlace(new Connector(latitude, longitude, energy, cooldownTimer));
+        SimulatePlay.getGraph().addPlace(new Connector(latitude, longitude, energy, cooldownTimer));
         break;
       case PORTAL:
         System.out.println("Insert the name of the portal");
         String name = sc.next();
-        SimulatePlay.graph.addPlace(new Portal(name, latitude, longitude));
+        SimulatePlay.getGraph().addPlace(new Portal(name, latitude, longitude));
         break;
       default:
         System.out.println("Invalid type");
     }
   }
 
-  //Make menu that allows the user to edit a local
+  /**
+   * Método que permite ao utilizador editar um local.
+   * O utilizador é obrigado a inserir um número que corresponde ao índice do local que pretende editar.
+   * Caso o número inserido não corresponda a nenhum dos índices, é mostrada uma mensagem de erro.
+   * Caso o número inserido corresponda a um dos índices, é executada a opção correspondente.
+   *
+   */
   private static void editLocal() {
-    for (ILocalType place : SimulatePlay.graph.getPlaces()) {
+    for (ILocalType place : SimulatePlay.getGraph().getPlaces()) {
       System.out.println(place.toString());
     }
     System.out.println("Insert the index of the local to edit");
     Scanner sc = new Scanner(System.in);
     int id = sc.nextInt();
-    ILocalType place = SimulatePlay.graph.getVertex(id);
+    ILocalType place = SimulatePlay.getGraph().getVertex(id);
     if (place == null) {
       System.out.println("Invalid id");
       return;
@@ -125,18 +150,31 @@ public class Gestao_Local {
   }
 
 
-  //Make menu that allows the user to remove a local
+  /**
+   * Método que permite ao utilizador remover um local.
+   * O utilizador é obrigado a inserir um número que corresponde ao índice do local que pretende remover.
+   * Caso o número inserido não corresponda a nenhum dos índices, é mostrada uma mensagem de erro.
+   * Caso o número inserido corresponda a um dos índices, é executada a opção correspondente.
+   */
   private static void removeLocal() {
-    for (ILocalType place : SimulatePlay.graph.getPlaces()) {
+    for (ILocalType place : SimulatePlay.getGraph().getPlaces()) {
       System.out.println(place.toString());
     }
     System.out.println("Insert the index of the local to remove");
     Scanner sc = new Scanner(System.in);
     int id = sc.nextInt();
-    SimulatePlay.graph.removePlace(id);
+    SimulatePlay.getGraph().removePlace(id);
   }
 
-  //Make a menu that list all the locals,via certain criteria
+  /**
+   * Método que permite ao utilizador listar os locais.
+   * O utilizador é obrigado a inserir um número que corresponde à opção que pretende executar.
+   * 1 - Lista todos os locais.
+   * 2 - Lista os locais por tipo.
+   * 3 - Lista os portais por nome.
+   * 4 - Lista os portais capturados.
+   *
+   */
   public static void listLocals() {
     //Add a option that allows the user to list Captures Portal
     System.out.println("Choose an option: 1.List all 2.List by type 3.List Portal by name 4.List Captured Portals");
@@ -144,7 +182,7 @@ public class Gestao_Local {
     int option = sc.nextInt();
     switch (option) {
       case 1:
-        for (ILocalType place : SimulatePlay.graph.getPlaces()) {
+        for (ILocalType place : SimulatePlay.getGraph().getPlaces()) {
           System.out.println(place.toString());
         }
         break;
@@ -158,7 +196,7 @@ public class Gestao_Local {
           System.out.println("Invalid type");
           return;
         }
-        for (ILocalType place : SimulatePlay.graph.getPlaces()) {
+        for (ILocalType place : SimulatePlay.getGraph().getPlaces()) {
           if (place.getType() == LocalType.values()[type]) {
             System.out.println(place.toString());
           }
@@ -167,7 +205,7 @@ public class Gestao_Local {
       case 3:
         System.out.println("Insert the name of the local");
         String name = sc.next();
-        for (ILocalType place : SimulatePlay.graph.getPlaces()) {
+        for (ILocalType place : SimulatePlay.getGraph().getPlaces()) {
           if (place instanceof IPortal && ((IPortal) place).getName().equals(name)) {
             System.out.println(place.toString());
           }
@@ -175,9 +213,9 @@ public class Gestao_Local {
         break;
 
       case 4:
-        Portal_Sort_byTeamType[] capturedPortals = new Portal_Sort_byTeamType[SimulatePlay.graph.getPlaces().size()];
+        Portal_Sort_byTeamType[] capturedPortals = new Portal_Sort_byTeamType[SimulatePlay.getGraph().getPlaces().size()];
         int i = 0;
-        for (ILocalType place : SimulatePlay.graph.getPlaces()) {
+        for (ILocalType place : SimulatePlay.getGraph().getPlaces()) {
           if (place instanceof IPortal && ((IPortal) place).getStatus() != TeamType.NEUTRAL) {
             capturedPortals[i++] = (Portal_Sort_byTeamType) place;
           }
@@ -196,9 +234,16 @@ public class Gestao_Local {
     }
   }
 
-  private static void exportLocals() {
+  /**
+   * Método que permite ao utilizador exportar os locais para um ficheiro JSON.
+   * Caso não existam locais, é mostrada uma mensagem de erro.
+   * Caso existam locais, é criado um ficheiro JSON com o nome "game.json" e é adicionado um array de locais.
+   * Cada local é adicionado ao array de locais.
+   *
+   */
+  public static void exportLocals() {
 
-    if (SimulatePlay.graph.isEmpty()) {
+    if (SimulatePlay.getGraph().isEmpty()) {
       System.out.println("There are no locals to export");
       return;
     }
@@ -206,7 +251,7 @@ public class Gestao_Local {
     Gson gson = new Gson();
 
     String json = "{\"locals\":[";
-    for (ILocalType place : SimulatePlay.graph.getPlaces()) {
+    for (ILocalType place : SimulatePlay.getGraph().getPlaces()) {
       json += gson.toJson(place) + ",";
     }
     json = json.substring(0, json.length() - 1) + "]}";
@@ -235,9 +280,15 @@ public class Gestao_Local {
     }
   }
 
+  /**
+   * Método que permite ao utilizador importar os locais de um ficheiro JSON.
+   * Caso já existam locais, é mostrada uma mensagem de erro.
+   * Caso não existam locais, é lido o ficheiro JSON com o nome "game.json" e é adicionado um array de locais.
+   * Cada local é adicionado ao array de locais contido no SimulatePlay.
+   */
   protected static void importLocals() {
 
-    if (!SimulatePlay.graph.isEmpty()) {
+    if (!SimulatePlay.getGraph().isEmpty()) {
       System.out.println("There are already locals in the program");
       return;
     }
@@ -258,17 +309,17 @@ public class Gestao_Local {
         switch (type) {
           case "PORTAL":
             IPortal portal = gson.fromJson(routeObject, Portal.class);
-            SimulatePlay.graph.addPlace(portal);
+            SimulatePlay.getGraph().addPlace(portal);
             break;
           case "CONNECTOR":
             IConnector connector = gson.fromJson(routeObject, Connector.class);
-            SimulatePlay.graph.addPlace(connector);
+            SimulatePlay.getGraph().addPlace(connector);
             break;
           default:
             System.out.println("Invalid type");
         }
       }
-      System.out.println("Locals imported " + SimulatePlay.graph.getPlaces().size());
+      System.out.println("Locals imported " + SimulatePlay.getGraph().getPlaces().size());
     } catch (FileNotFoundException e) {
       throw new RuntimeException(e);
     }

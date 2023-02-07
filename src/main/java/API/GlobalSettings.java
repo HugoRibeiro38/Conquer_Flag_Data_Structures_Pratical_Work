@@ -2,6 +2,14 @@ package API;
 
 import API.Interfaces.IGlobalSettings;
 
+/**
+ * Classe que contém as configurações globais do jogo
+ * <p>
+ *   GlobalSettings é uma classe que contém as configurações globais do jogo
+ *   GlobalSettings contém as configurações de captura de portais, recarga de energia e recarga de energia em conectores
+ *   GlobalSettings contém também as configurações de x e y
+ *   GlobalSettings é uma classe que implementa a interface IGlobalSettings
+ */
 public class GlobalSettings implements IGlobalSettings {
 
   static final double x = 0.02;

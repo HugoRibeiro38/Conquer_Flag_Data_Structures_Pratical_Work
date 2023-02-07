@@ -11,9 +11,20 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
 
+/**
+ * Classe que possui métodos que permitem o utilizador, obter o caminho mais curto entre dois locais,
+ * o caminho mais curto entre dois locais tendo que passar por um local,
+ * e exportar todos os caminhos possíveis entre dois locais.
+ */
 public class Gestao_Jogo {
 
-  //DO a menu for all private methods
+  /**
+   * Método que permite ao utilizador obter o caminho mais curto entre dois locais.
+   * O utilizador é obrigado a inserir o ID de dois locais.
+   * Caso o ID de um dos locais não exista, é mostrada uma mensagem de erro.
+   * Caso não exista caminho entre os dois locais, é mostrada uma mensagem de erro.
+   * Caso exista caminho entre os dois locais, é mostrado o caminho mais curto entre os dois locais.
+   */
   public static void menu(){
     int option;
     do {
@@ -41,9 +52,15 @@ public class Gestao_Jogo {
   }
 
 
-
+  /**
+   * Método que permite ao utilizador obter o caminho mais curto entre dois locais.
+   * O utilizador é obrigado a inserir o ID de dois locais.
+   * Caso o ID de um dos locais não exista, é mostrada uma mensagem de erro.
+   * Caso não exista caminho entre os dois locais, é mostrada uma mensagem de erro.
+   * Caso exista caminho entre os dois locais, é mostrado o caminho mais curto entre os dois locais.
+   */
   private static void CaminhoMaisCurto() {
-    for (ILocalType place : SimulatePlay.graph.getPlaces()) {
+    for (ILocalType place : SimulatePlay.getGraph().getPlaces()) {
       System.out.println(place);
     }
 
@@ -54,22 +71,29 @@ public class Gestao_Jogo {
     System.out.println("Insira o ID do segundo local");
     int id2 = sc.nextInt();
 
-    if (SimulatePlay.graph.getVertex(id1) == null || SimulatePlay.graph.getVertex(id2) == null) {
+    if (SimulatePlay.getGraph().getVertex(id1) == null || SimulatePlay.getGraph().getVertex(id2) == null) {
       System.out.println("Um dos locais não existe");
       return;
     }
 
-    ArrayList<ILocalType> path = SimulatePlay.graph.djistkra(SimulatePlay.graph.getVertex(id1), SimulatePlay.graph.getVertex(id2));
+    ArrayList<ILocalType> path = SimulatePlay.getGraph().djistkra(SimulatePlay.getGraph().getVertex(id1), SimulatePlay.getGraph().getVertex(id2));
     if (path.isEmpty()) {
       System.out.println("Não existe caminho entre os dois locais");
       return;
     }
 
-    System.out.println("Caminho mais curto: " + SimulatePlay.graph.djistkra(SimulatePlay.graph.getVertex(id1), SimulatePlay.graph.getVertex(id2)));
+    System.out.println("Caminho mais curto: " + path.toString());
   }
 
+  /**
+   * Método que permite ao utilizador obter o caminho mais curto entre dois locais tendo que passar por alguns locais.
+   * O utilizador é obrigado a inserir o ID de dois locais, e os IDs dos locais que tem que passar pelo caminho.
+   * Caso o ID de um dos locais não exista, é mostrada uma mensagem de erro.
+   * Caso não exista caminho entre os dois locais, é mostrada uma mensagem de erro.
+   * Caso exista caminho entre os dois locais, é mostrado o caminho mais curto entre os dois locais.
+   */
   private static void CaminhoMaisCurto_tendoquepassarpor() {
-    for (ILocalType place : SimulatePlay.graph.getPlaces()) {
+    for (ILocalType place : SimulatePlay.getGraph().getPlaces()) {
       System.out.println(place);
     }
     Scanner sc = new Scanner(System.in);
@@ -83,18 +107,18 @@ public class Gestao_Jogo {
     do {
       System.out.println("Insira os Ids dos locais que tem que passar pelo caminho (-1 para terminar)");
       option = sc.nextInt();
-      if (SimulatePlay.graph.getVertex(option) == null) {
+      if (SimulatePlay.getGraph().getVertex(option) == null) {
         System.out.println("Local não existe");
         return;
       } else {
         if (option != -1) {
-          places.addToRear(SimulatePlay.graph.getVertex(option));
+          places.addToRear(SimulatePlay.getGraph().getVertex(option));
         }
         break;
       }
     } while (option != -1);
 
-    PathWithWeight path = SimulatePlay.graph.findShortestPath_WithPoints(places, SimulatePlay.graph.getVertex(id1), SimulatePlay.graph.getVertex(id2));
+    PathWithWeight path = SimulatePlay.getGraph().findPaths(places, SimulatePlay.getGraph().getVertex(id1), SimulatePlay.getGraph().getVertex(id2)).first();
     if (path == null) {
       System.out.println("Não existe caminho entre os dois locais");
       return;
@@ -102,10 +126,13 @@ public class Gestao_Jogo {
     System.out.println(path);
   }
 
-  //Export into a json file the list of shortest paths between all places
+  /**
+   * Método que permite ao utilizador exportar todos os caminhos possíveis entre os locais.
+   * É criado um ficheiro JSON com todos os caminhos possíveis entre os locais, junto com o peso de cada caminho.
+   */
   private static void exportCaminhos() {
     JsonArray array = new JsonArray();
-    for (PathWithWeight path : SimulatePlay.graph.findAllPaths()) {
+    for (PathWithWeight path : SimulatePlay.getGraph().findAllPaths()) {
       array.add(path.toJson());
     }
     JsonObject object = new JsonObject();

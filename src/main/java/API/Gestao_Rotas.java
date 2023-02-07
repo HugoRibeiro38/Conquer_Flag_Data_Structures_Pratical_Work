@@ -7,8 +7,16 @@ import com.so.Collections.Map.HashMap;
 import java.io.*;
 import java.util.Scanner;
 
+/**
+ * Classe que permite ao utilizador gerir as rotas
+ */
 public class Gestao_Rotas {
-  //Menu que permite ao utilizador criar e remover rotas
+  /**
+   * Menu que permite ao utilizador gerir as rotas
+   * O utilizador pode criar uma rota, remover uma rota ou exportar as rotas
+   * O utilizador pode voltar ao menu anterior
+   * Caso o utilizador insira uma opção inválida, é mostrada uma mensagem de erro
+   */
   public static void menu() {
     int opcao = 0;
     Scanner sc = new Scanner(System.in);
@@ -37,38 +45,50 @@ public class Gestao_Rotas {
   }
 
 
-  //Função que permite ao utilizador criar uma rota
+  /**
+   * Função que permite ao utilizador criar uma rota
+   * O utilizador é obrigado a inserir o ID de dois locais
+   * Caso o ID de um dos locais não exista, é mostrada uma mensagem de erro
+   * Caso a rota seja criada com sucesso, é mostrada uma mensagem de sucesso
+   */
   public static void criarRota() {
     Scanner sc = new Scanner(System.in);
     System.out.println("Insira o ID do primeiro local");
     int id1 = sc.nextInt();
     System.out.println("Insira o ID do segundo local");
     int id2 = sc.nextInt();
-    if (SimulatePlay.graph.addRoute(id1, id2)) {
+    if (SimulatePlay.getGraph().addRoute(id1, id2)) {
       System.out.println("Rota criada com sucesso");
     } else {
       System.out.println("Não foi possível criar a rota");
     }
   }
 
-  //Função que permite ao utilizador remover uma rota
+  /**
+   * Função que permite ao utilizador remover uma rota
+   * O utilizador é obrigado a inserir o ID de dois locais
+   * Caso o ID de um dos locais não exista, é mostrada uma mensagem de erro
+   */
   public static void removerRota() {
     Scanner sc = new Scanner(System.in);
     System.out.println("Insira o ID do primeiro local");
     int id1 = sc.nextInt();
     System.out.println("Insira o ID do segundo local");
     int id2 = sc.nextInt();
-    if (SimulatePlay.graph.removeRoute(id1, id2)) {
+    if (SimulatePlay.getGraph().removeRoute(id1, id2)) {
       System.out.println("Rota removida com sucesso");
     } else {
       System.out.println("Não foi possível remover a rota");
     }
   }
 
-  //Função que permite ao utilizador exportar as rotas para um ficheiro
+  /**
+   * Função que permite ao utilizador exportar as rotas para um ficheiro
+   * O ficheiro é guardado no formato JSON
+   */
   public static void exportarRotas() {
     Gson gson = new Gson();
-    HashMap<Integer, ArrayUnorderedList<Integer>> routes = SimulatePlay.graph.getRoutes();
+    HashMap<Integer, ArrayUnorderedList<Integer>> routes = SimulatePlay.getGraph().getRoutes();
     String json = "{\"routes\":[";
 
     for (Integer from : routes.keySet()) {
@@ -103,16 +123,18 @@ public class Gestao_Rotas {
     }
   }
 
-
+  /**
+   * Função que permite ao utilizador importar as rotas de um ficheiro
+   * Caso o grafo esteja vazio, é mostrada uma mensagem de erro
+   * Caso o ficheiro não exista, é mostrada uma mensagem de erro
+   */
   public static void importarRotas() {
-    if (SimulatePlay.graph.isEmpty()) {
+    if (SimulatePlay.getGraph().isEmpty()) {
       System.out.println("Não existem locais para criar rotas");
       System.out.println("Por favor crie/importe locais primeiro");
       return;
     }
 
-    Gson gson = new Gson();
-    JsonObject jsonData = new JsonObject();
 
     try {
       JsonParser parser = new JsonParser();
@@ -123,7 +145,7 @@ public class Gestao_Rotas {
         JsonObject routeObject = route.getAsJsonObject();
         int from = routeObject.get("from").getAsInt();
         int to = routeObject.get("to").getAsInt();
-        SimulatePlay.graph.addRoute(from, to);
+        SimulatePlay.getGraph().addRoute(from, to);
       }
 
     } catch (FileNotFoundException e) {

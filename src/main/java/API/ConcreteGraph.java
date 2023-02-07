@@ -20,22 +20,32 @@ import com.so.Collections.Queues.QueueADT;
 import java.util.Iterator;
 
 
+/**
+ * ConcreteGraph é uma classe que extende WGraph e implementa IConcreteGraph.
+ * É usada para armazenar o grafo com pesos do jogo.
+ * Também armazena as rotas do grafo em um hashmap.
+ * A chave do hashmap é o vértice de partida.
+ * O valor do hashmap é uma lista de vértices de chegada.
+ */
 public class ConcreteGraph extends WGraph<ILocalType> implements IConcreteGraph {
 
 
   private final HashMap<Integer, ArrayUnorderedList<Integer>> routes;
 
+  /**
+   * Construtor da classe.
+   */
   public ConcreteGraph() {
     super();
     routes = new HashMap<>();
   }
 
   /**
-   * Adds a route "edge" to the arraylist routes.
+   * Adiciona uma rota "edge" entre dois vértices e inseri-la no hashmap routes.
    *
-   * @param start the start vertex
-   * @param end   the end vertex
-   * @return
+   * @param start vertice de partida
+   * @param end   vertice de chegada
+   * @return true se a rota foi adicionada com sucesso, false caso contrário
    */
   @Override
   public boolean addRoute(int start, int end) {
@@ -65,13 +75,13 @@ public class ConcreteGraph extends WGraph<ILocalType> implements IConcreteGraph 
 
 
   /**
-   * Removes a route "edge" from the arraylist routes.
-   * First value of the route is the key of the hashmap.
-   * Second value of the route is the value to be added to the arraylist.
+   * Remove uma rota "edge" entre dois vértices e remove-a do hashmap routes.
+   * Primeiro valor da rota é a chave do hashmap.
+   * Segundo valor da rota é o valor a ser removido da lista.
    *
-   * @param start the start vertex
-   * @param end   the end vertex
-   * @return
+   * @param start vertice de partida
+   * @param end   vertice de chegada
+   * @return true se a rota foi removida com sucesso, false caso contrário
    */
   @Override
   public boolean removeRoute(int start, int end) {
@@ -111,10 +121,10 @@ public class ConcreteGraph extends WGraph<ILocalType> implements IConcreteGraph 
 
 
   /**
-   * Based on the ID of the ILocalType, returns the index of the vertex in the graph.
+   * Baseado no ID do ILocalType, retorna o índice do vértice no grafo.
    *
-   * @param id the ID of the ILocalType
-   * @return Object representing the ILocalType
+   * @param id o ID do ILocalType
+   * @return Object que representa ILocalType
    */
   public ILocalType getVertex(int id) {
     VerticesIterator iterator = new VerticesIterator(vertices);
@@ -125,15 +135,19 @@ public class ConcreteGraph extends WGraph<ILocalType> implements IConcreteGraph 
     return null;
   }
 
+  /**
+   * Método que permite introduzir um vértice (ILocalType) no grafo.
+   * @param place O lugar a ser adicionado.
+   */
   @Override
   public void addPlace(ILocalType place) {
     super.addVertex(place);
   }
 
   /**
-   * Removes a vertex from the graph.
+   * Remove um vértice do grafo.
    *
-   * @param id ID of the place to be removed.
+   * @param id ID do vértice a ser removido
    */
   @Override
   public void removePlace(int id) {
@@ -143,14 +157,31 @@ public class ConcreteGraph extends WGraph<ILocalType> implements IConcreteGraph 
     }
   }
 
-
+  /**
+   * Método que permite obter o caminho mais curto entre dois vértices.
+   *<p>
+   *   O caminho é representado por uma lista de ILocalType.
+   *   O primeiro elemento da lista é o vértice de partida e o último é o vértice de chegada.
+   *   Os elementos intermédios são os vértices que compõem o caminho.
+   *
+   * @param start O ponto de início.
+   * @param end O ponto final.
+   * @return Uma lista de ILocalType que representa o caminho mais curto entre os dois pontos.
+   */
   @Override
   public ArrayList<ILocalType> djistkra(ILocalType start, ILocalType end) {
     return super.djisktra(start, end);
   }
 
 
-  private ArrayList<PathWithWeight> findPaths(ArrayList<ILocalType> toPass, ILocalType start, ILocalType end) {
+  /**
+   * Método que permite obter todos os caminhos possíveis entre dois vértices, tendo que passar por um conjunto de vértices.
+   * @param toPass Conjunto de vértices que têm que ser passados.
+   * @param start O ponto de início.
+   * @param end O ponto final.
+   * @return Uma lista de caminhos possíveis.
+   */
+  public ArrayList<PathWithWeight> findPaths(ArrayList<ILocalType> toPass, ILocalType start, ILocalType end) {
     ArrayOrderedList<PathWithWeight> validPaths = new ArrayOrderedList();
     Iterator var6 = this.findAllPathsWithWeight(start, end).iterator();
 
@@ -176,10 +207,12 @@ public class ConcreteGraph extends WGraph<ILocalType> implements IConcreteGraph 
     return validPaths;
   }
 
-  public PathWithWeight findShortestPath_WithPoints(ArrayList<ILocalType> toPass, ILocalType start, ILocalType end) {
-    return (PathWithWeight) this.findPaths(toPass, start, end).first();
-  }
-
+  /**
+   * Método que permite obter todos os caminhos possíveis entre dois vértices, junto com o seu peso.
+   * @param startVertex O ponto de início.
+   * @param endVertex O ponto final.
+   * @return Uma lista de caminhos possíveis.
+   */
   private ListADT<PathWithWeight> findAllPathsWithWeight(ILocalType startVertex, ILocalType endVertex) {
     int startIndex = this.getIndex(startVertex);
     int endIndex = this.getIndex(endVertex);
@@ -200,6 +233,12 @@ public class ConcreteGraph extends WGraph<ILocalType> implements IConcreteGraph 
     return allPaths;
   }
 
+  /**
+   * Método que permite obter o ILocalType de um vértice, dado o seu índice.
+   *
+   * @param pos Indice do vértice
+   * @return O ILocalType do vértice
+   */
   ILocalType getVertex_Pos(int pos) {
     int i = 0;
 
@@ -213,6 +252,15 @@ public class ConcreteGraph extends WGraph<ILocalType> implements IConcreteGraph 
     return null;
   }
 
+  /**
+   * Helper method para encontrar todos os caminhos possíveis entre dois vértices, junto com o seu peso.
+   * @param currentIndex Current index
+   * @param endIndex End index
+   * @param isVisited Array de vértices visitados
+   * @param currentPath Caminho atual
+   * @param allPaths Lista de todos os caminhos
+   * @param weight Peso do caminho
+   */
   private void findAllPathsWithWeight(int currentIndex, int endIndex, boolean[] isVisited, ListADT<ILocalType> currentPath, ListADT<PathWithWeight> allPaths, int weight) {
     // System.out.println("INDEX" + currentIndex + " VERTEX" + this.getVertex_Pos(currentIndex));
     ((ArrayUnorderedList) currentPath).addToRear(this.getVertex_Pos(currentIndex));
@@ -238,30 +286,56 @@ public class ConcreteGraph extends WGraph<ILocalType> implements IConcreteGraph 
     isVisited[currentIndex] = false;
   }
 
-
+  /**
+   * Método que permite obter o índice de um vértice, dado o seu ILocalType.
+   *
+   * @param <T> Tipo genérico do vértice
+   */
   private static class VerticesIterator<T> implements Iterator<T> {
     private final T[] vertices;
     private int currentIndex = 0;
 
+    /**
+     * Construtor do iterador de vértices.
+     *
+     * @param vertices Array de vértices
+     */
     public VerticesIterator(T[] vertices) {
       this.vertices = vertices;
     }
 
+    /**
+     * Método que permite verificar se existe um próximo vértice.
+     *
+     * @return True se existir um próximo vértice, false caso contrário.
+     */
     @Override
     public boolean hasNext() {
       return currentIndex < vertices.length && vertices[currentIndex] != null;
     }
 
+    /**
+     * Método que permite obter o próximo vértice.
+     * @return O próximo vértice.
+     */
     @Override
     public T next() {
       return vertices[currentIndex++];
     }
   }
 
+  /**
+   * Método que permite obter o HashMap de rotas.
+   * @return O HashMap de rotas.
+   */
   public HashMap<Integer, ArrayUnorderedList<Integer>> getRoutes() {
     return routes;
   }
 
+  /**
+   * Método que permite obter a lista de vértices.
+   * @return A lista de vértices.
+   */
   public ArrayList<ILocalType> getPlaces() {
     ArrayUnorderedList<ILocalType> places = new ArrayUnorderedList<>();
 
@@ -273,6 +347,10 @@ public class ConcreteGraph extends WGraph<ILocalType> implements IConcreteGraph 
     return places;
   }
 
+  /**
+   * Método que permite obter todas as rotas possíveis entre todos os vertices.
+   * @return Lista de todas as rotas possíveis entre todos os vértices.
+   */
   public ListADT<PathWithWeight> findAllPaths() {
     DoubleUnorderedList<PathWithWeight> allPathsForAllPlaces = new DoubleUnorderedList<>();
     for (int i = 0; i < this.numVertices; i++) {
@@ -285,6 +363,11 @@ public class ConcreteGraph extends WGraph<ILocalType> implements IConcreteGraph 
     return allPathsForAllPlaces;
   }
 
+  /**
+   * Método que permite o utilizador visualizar os locais que pode visitar a partir de um determinado local.
+   * @param vertex Vértice a partir do qual se quer visualizar os locais que se pode visitar.
+   * @return Lista de locais que se pode visitar a partir do vértice.
+   */
   public ListADT<ILocalType> displayPlaces(ILocalType vertex) {
     LinkedList<ILocalType> places = new LinkedList<>();
     int index = this.getIndex(vertex);

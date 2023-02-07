@@ -47,14 +47,6 @@ public interface IConcreteGraph {
    */
   ArrayList<ILocalType> djistkra(ILocalType start, ILocalType end);
 
-  /**
-   * Encontra todos os caminhos possíveis entre o ponto de início e o ponto final que passam pelos pontos fornecidos.
-   *
-   * @param toPass Uma lista de pontos a serem visitados.
-   * @param start  O ponto de início.
-   * @param end    O ponto final.
-   * @return Uma lista de listas de lugares que representam todos os caminhos possíveis entre o ponto de início e o ponto final que passam pelos pontos fornecidos.
-   */
-  PathWithWeight findShortestPath_WithPoints(ArrayList<ILocalType> toPass, ILocalType start, ILocalType end);
+
 
 }

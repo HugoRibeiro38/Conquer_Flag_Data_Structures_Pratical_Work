@@ -70,8 +70,8 @@ public class Main {
     //System.out.println(SimulatePlay.graph.getRoutes().size());
     //  Gestao_Players.menu();
 
-    SimulatePlay.graph = graph;
-    SimulatePlay.players = players;
+    //SimulatePlay.graph = graph;
+    //SimulatePlay.players = players;
 
     /*
      *
@@ -83,7 +83,7 @@ public class Main {
     Scanner sc = new Scanner(System.in);
     do {
       System.out.println("Choose an option:\n" +
-          " 1.Gestao_Jogo 2.Gestao_Players 3.Gestao_Local 4.Gestao_Rotas 5.Simulate Play 6.Load File 0.STOP");
+          " 1.Gestao_Jogo 2.Gestao_Players 3.Gestao_Local 4.Gestao_Rotas 5.Simulate Play 6.Load File  7.Export File 0.STOP");
       option = sc.nextInt();
       switch (option) {
         case 1:
@@ -105,6 +105,10 @@ public class Main {
         case 6:
           SimulatePlay loadFile = new SimulatePlay();
           loadFile.loadFile();
+          break;
+        case 7:
+          SimulatePlay saveFile = new SimulatePlay();
+          saveFile.saveFile();
           break;
         case 0:
           break;

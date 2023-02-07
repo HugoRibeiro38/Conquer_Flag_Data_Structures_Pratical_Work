@@ -13,12 +13,39 @@ import com.so.Collections.Map.HashMap;
 import java.util.Iterator;
 import java.util.Scanner;
 
-//TODO:Make Missing Menu that allows players to "play"
+/**
+ * Class that simulates the game.
+ */
 public class SimulatePlay implements ISimulatePlay {
-  public static ListADT<IPlayer> players = new ArrayUnorderedList<>();
-  public static ConcreteGraph graph = new ConcreteGraph();
-  static HashMap<IPlayer, ILocalType> playerLocation = new HashMap<>();
-  static int time = 0;
+  private static ListADT<IPlayer> players = new ArrayUnorderedList<>();
+  private static ConcreteGraph graph = new ConcreteGraph();
+  private static HashMap<IPlayer, ILocalType> playerLocation = new HashMap<>();
+  private static int time = 0;
+
+  /**
+   * Método que devolve o grafo.
+   * @return Grafo.
+   */
+  public static ConcreteGraph getGraph() {
+    return graph;
+  }
+
+
+  /**
+   * Método que devolve a lista de jogadores.
+   * @return Lista de jogadores.
+   */
+  public static ListADT<IPlayer> getPlayers() {
+    return players;
+  }
+
+  /**
+   * Método que permite definir a lista de jogadores.
+   * @param players Lista de jogadores.
+   */
+  public static void setPlayers(ListADT<IPlayer> players) {
+    SimulatePlay.players = players;
+  }
 
   public static int getTime() {
     return time;
@@ -29,7 +56,9 @@ public class SimulatePlay implements ISimulatePlay {
   }
 
 
-  //Make a menu that allows players to "play"
+  /**
+   * Método que permite os varios jogadores jogarem.
+   */
   public void play() {
 
     if (players.isEmpty()) {
@@ -102,7 +131,10 @@ public class SimulatePlay implements ISimulatePlay {
 
   }
 
-  //Generate a random location for each player
+  /**
+   * Método que gera as localizações aleatórias dos jogadores.
+   * Tendo em conta que os jogadores não podem estar em portais.
+   */
   public static void generateRandomLocations() {
     if (!playerLocation.isEmpty()) {
       return;
@@ -121,7 +153,11 @@ public class SimulatePlay implements ISimulatePlay {
     }
   }
 
-
+  /**
+   * Método que permite iterar os jogadores.
+   * @param playerIterator Iterator dos jogadores
+   * @return Jogador atual
+   */
   private IPlayer cyclePlayers(Iterator<IPlayer> playerIterator) {
     if (!playerIterator.hasNext()) {
       playerIterator = players.iterator();
@@ -129,11 +165,22 @@ public class SimulatePlay implements ISimulatePlay {
     return playerIterator.next();
   }
 
-
+  /**
+   * Método que permite carregar a informaçao contida nos ficheiros para as estruturas de dados.
+   */
   public void loadFile() {
     Gestao_Local.importLocals();
     Gestao_Players.importPlayers();
     Gestao_Rotas.importarRotas();
+  }
+
+  /**
+   * Método que permite guardar os dados das estruturas de dados para os ficheiros.
+   */
+  public void saveFile() {
+    Gestao_Local.exportLocals();
+    Gestao_Players.exportPlayers();
+    Gestao_Rotas.exportarRotas();
   }
 
 }

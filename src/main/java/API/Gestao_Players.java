@@ -19,17 +19,32 @@ import java.io.IOException;
 import java.util.Iterator;
 import java.util.Scanner;
 
+/**
+ * Classe que gere os jogadores.
+ */
 public class Gestao_Players {
 
 
+  /**
+   * Método que permite introduzir um jogador.
+   * @param name Nome do jogador.
+   * @param team Equipa do jogador.
+   */
   public static void addPlayer(String name, String team) {
     IPlayer player = new Player(name, team);
-    ArrayUnorderedList<IPlayer> temp_players = (ArrayUnorderedList<IPlayer>) SimulatePlay.players;
+    ArrayUnorderedList<IPlayer> temp_players = (ArrayUnorderedList<IPlayer>) SimulatePlay.getPlayers();
     temp_players.addToRear(player);
   }
 
 //Make menu that goes through all the players and prints their names and teams, and then asks for the name of the player to be removed and removes it from the list.
 
+  /**
+   * Método que vai percorrer todos os jogadores e imprime a sua informação.
+   * No final, pede o nome do jogador e é devolvido o nome do jogador.
+   * @param temp_players Lista de jogadores.
+   * @param textShow Texto a ser mostrado.
+   * @return Nome do jogador.
+   */
   private static String goTroughPlayers(ListADT<IPlayer> temp_players, String textShow) {
 
     for (IPlayer player : temp_players) {
@@ -42,6 +57,14 @@ public class Gestao_Players {
   }
 
   //Make menu that allows the user to update value of a player
+
+  /**
+   * Método que permite atualizar um jogador.
+   * Primeiro, é pedido o nome do jogador a atualizar.
+   * Depois, é pedido o valor a atualizar.
+   * Por fim, é pedido o novo valor.
+   * @param temp_players Lista de jogadores.
+   */
 
   private static void updatePlayer(ListADT<IPlayer> temp_players) {
     String name = goTroughPlayers(temp_players, "Choose the player to update");
@@ -74,8 +97,15 @@ public class Gestao_Players {
     ((ArrayUnorderedList<IPlayer>) (temp_players)).addToRear(player);
   }
 
+  /**
+   * Método que permite remover um jogador.
+   * Primeiro, é pedido o nome do jogador a remover.
+   * Depois, é removido o jogador.
+   * @param name Nome do jogador.
+   * @return Jogador removido.
+   */
   public static IPlayer removePlayer(String name) {
-    ArrayUnorderedList<IPlayer> temp_players = (ArrayUnorderedList<IPlayer>) SimulatePlay.players;
+    ArrayUnorderedList<IPlayer> temp_players = (ArrayUnorderedList<IPlayer>) SimulatePlay.getPlayers();
     IPlayer[] players = new IPlayer[temp_players.size()];
     int i = 0;
     for (IPlayer player : temp_players) {
@@ -93,7 +123,12 @@ public class Gestao_Players {
     return null;
   }
 
-
+  /**
+   * Método que permite interagir com os métodos de gestão de jogadores.
+   * Primeiro, é pedido a opção.
+   * Depois, é executada a opção.
+   * Por fim, é mostrado o menu novamente.
+   */
   public static void menu() {
     int option;
     do {
@@ -107,11 +142,11 @@ public class Gestao_Players {
           addPlayer(name, TeamType.NEUTRAL.toString());
           break;
         case 2:
-          String name1 = goTroughPlayers(SimulatePlay.players, "Choose the player to remove");
+          String name1 = goTroughPlayers(SimulatePlay.getPlayers(), "Choose the player to remove");
           removePlayer(name1);
           break;
         case 3:
-          updatePlayer(SimulatePlay.players);
+          updatePlayer(SimulatePlay.getPlayers());
           break;
         case 4:
           listPlayers();
@@ -132,8 +167,11 @@ public class Gestao_Players {
 
   //List all the players by level and by team and number of portals currently controlled by each player
 
+  /**
+   * Método que lista todos os jogadores por nível e por equipa e número de portais atualmente controlados por cada jogador.
+   */
   public static void listPlayers() {
-    ArrayUnorderedList<IPlayer> temp_players = (ArrayUnorderedList<IPlayer>) SimulatePlay.players;
+    ArrayUnorderedList<IPlayer> temp_players = (ArrayUnorderedList<IPlayer>) SimulatePlay.getPlayers();
     IPlayer[] players = new IPlayer[temp_players.size()];
     int i = 0;
     for (IPlayer player : temp_players) {
@@ -146,10 +184,16 @@ public class Gestao_Players {
   }
 
 
-  //Do a export function using Gson to export the players to a json file
+  /**
+   * Método que permite exportar os jogadores para um ficheiro.
+   * Primeiro, é criado um objeto JSON.
+   * Depois, é criado um array de jogadores.
+   * Por fim, é adicionado o array de jogadores ao objeto JSON.
+   * E é escrito no ficheiro.
+   */
   public static void exportPlayers() {
     Gson gson = new Gson();
-    Iterator<IPlayer> it = SimulatePlay.players.iterator();
+    Iterator<IPlayer> it = SimulatePlay.getPlayers().iterator();
     JSONObject json = new JSONObject();
     JSONArray playersArray = new JSONArray();
     while (it.hasNext()) {
@@ -178,9 +222,12 @@ public class Gestao_Players {
     }
   }
 
-  //Do a import function using Gson to import the players from a json file
+  /**
+   * Método que permite importar os jogadores de um ficheiro.
+   */
+
   public static void importPlayers() {
-    if (!SimulatePlay.players.isEmpty()) {
+    if (!SimulatePlay.getPlayers().isEmpty()) {
       return;
     }
     Gson gson = new Gson();
@@ -199,7 +246,7 @@ public class Gestao_Players {
     } catch (IOException e) {
       throw new RuntimeException(e);
     }
-    SimulatePlay.players = players;
+    SimulatePlay.setPlayers(players);
   }
 
 
