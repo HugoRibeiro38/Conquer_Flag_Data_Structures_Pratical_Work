@@ -1,7 +1,9 @@
 package API;
 
+import API.Enums.TeamType;
 import API.Interfaces.ILocalType;
 import API.Interfaces.IPlayer;
+import API.Interfaces.IPortal;
 import com.so.Collections.Arrays.ArrayUnorderedList;
 import com.so.Collections.ListADT;
 import com.so.Collections.Lists.LinkedList;
@@ -53,6 +55,9 @@ public class SimulatePlay {
         break;
       }
       IPlayer currentPlayer = cyclePlayers(playerIterator);
+      if (currentPlayer.getTeam() == TeamType.NEUTRAL) {
+        currentPlayer = cyclePlayers(playerIterator);
+      }
 
       ILocalType currentPlace = (ILocalType) playerLocation.get(currentPlayer);
 
@@ -105,7 +110,13 @@ public class SimulatePlay {
       //Generate a random int between 0 and the number of vertices
       int random = (int) (Math.random() * graph.size());
 
-      playerLocation.put(player, ((ConcreteGraph) graph).getVertex_Pos(random));
+      ILocalType place = ((ConcreteGraph) graph).getVertex_Pos(random);
+      while (place instanceof IPortal) {
+        random = (int) (Math.random() * graph.size());
+        place = ((ConcreteGraph) graph).getVertex_Pos(random);
+      }
+
+      playerLocation.put(player, place);
     }
   }
 
