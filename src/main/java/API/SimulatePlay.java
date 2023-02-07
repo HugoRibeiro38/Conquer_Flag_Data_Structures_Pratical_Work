@@ -4,6 +4,7 @@ import API.Enums.TeamType;
 import API.Interfaces.ILocalType;
 import API.Interfaces.IPlayer;
 import API.Interfaces.IPortal;
+import API.Interfaces.ISimulatePlay;
 import com.so.Collections.Arrays.ArrayUnorderedList;
 import com.so.Collections.ListADT;
 import com.so.Collections.Lists.LinkedList;
@@ -13,7 +14,7 @@ import java.util.Iterator;
 import java.util.Scanner;
 
 //TODO:Make Missing Menu that allows players to "play"
-public class SimulatePlay {
+public class SimulatePlay implements ISimulatePlay {
   public static ListADT<IPlayer> players = new ArrayUnorderedList<>();
   public static ConcreteGraph graph = new ConcreteGraph();
   static HashMap<IPlayer, ILocalType> playerLocation = new HashMap<>();
