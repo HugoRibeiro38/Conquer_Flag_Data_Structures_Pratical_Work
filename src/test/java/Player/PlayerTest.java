@@ -11,8 +11,8 @@ import static org.junit.jupiter.api.Assertions.*;
 public class PlayerTest {
 
     private static final String TEST_NAME = "John Doe";
-    private static final String TEST_TEAM_GIANTS = "Giants";
-    private static final String TEST_TEAM_SPARKS = "Sparks";
+    private static final String TEST_TEAM_GIANTS = "GIANTS";
+    private static final String TEST_TEAM_SPARKS = "SPARKS";
     private static final int TEST_LEVEL = 1;
     private static final int TEST_EXPERIENCE_POINTS = 1000;
     private static final int TEST_CURRENT_ENERGY = 80;
