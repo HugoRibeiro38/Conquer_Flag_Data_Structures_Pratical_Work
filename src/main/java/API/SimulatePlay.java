@@ -70,6 +70,11 @@ public class SimulatePlay implements ISimulatePlay {
       return;
     }
 
+    if(graph.getRoutes().isEmpty()){
+      System.out.println("No routes");
+      return;
+    }
+
     if (!players.isEmpty() && playerLocation.isEmpty()) {
       generateRandomLocations();
     }
