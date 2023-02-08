@@ -5,6 +5,10 @@ import API.Interfaces.ICoordinate;
 import API.Interfaces.ILocalType;
 import API.Interfaces.IPlayer;
 
+/**
+ * @author Márcio Ribeiro - 8200408
+ * @author Hugo Ribeiro - 8200441
+ */
 public class Local implements ILocalType {
 
   protected static int nextID = 1;

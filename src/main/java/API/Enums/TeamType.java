@@ -5,6 +5,8 @@ package API.Enums;
  * NEUTRAL - Equipa neutra
  * SPARKS - Equipa dos Sparks
  * GIANTS - Equipa dos Giants
+ *  @author Márcio Ribeiro - 8200408
+ *  @author Hugo Ribeiro - 8200441
  */
 public enum TeamType {
     NEUTRAL,

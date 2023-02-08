@@ -4,6 +4,8 @@ import API.Enums.TeamType;
 
 /**
  * Interface que representa um jogador.
+ * @author Márcio Ribeiro - 8200408
+ * @author Hugo Ribeiro - 8200441
  */
 public interface IPlayer extends Comparable<IPlayer> {
 

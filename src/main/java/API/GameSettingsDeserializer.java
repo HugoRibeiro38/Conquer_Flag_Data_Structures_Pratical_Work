@@ -5,6 +5,10 @@ import com.google.gson.*;
 
 import java.lang.reflect.Type;
 
+/**
+ * @author Márcio Ribeiro - 8200408
+ * @author Hugo Ribeiro - 8200441
+ */
 public class GameSettingsDeserializer implements JsonDeserializer<AGameSettings> {
 
 

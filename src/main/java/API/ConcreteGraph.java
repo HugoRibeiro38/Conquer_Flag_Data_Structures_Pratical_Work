@@ -26,6 +26,8 @@ import java.util.Iterator;
  * Também armazena as rotas do grafo em um hashmap.
  * A chave do hashmap é o vértice de partida.
  * O valor do hashmap é uma lista de vértices de chegada.
+ * @author Márcio Ribeiro - 8200408
+ * @author Hugo Ribeiro - 8200441
  */
 public class ConcreteGraph extends WGraph<ILocalType> implements IConcreteGraph {
 

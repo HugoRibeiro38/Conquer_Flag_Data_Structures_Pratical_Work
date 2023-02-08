@@ -9,6 +9,8 @@ import java.util.Scanner;
 
 /**
  * Classe que permite ao utilizador gerir as rotas
+ * @author Márcio Ribeiro - 8200408
+ * @author Hugo Ribeiro - 8200441
  */
 public class Manage_Routes {
   /**

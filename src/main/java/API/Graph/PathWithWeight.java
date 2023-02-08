@@ -16,6 +16,9 @@ import com.so.Collections.ListADT;
  *   no grafo.
  *   Esta classe implementa a interface Comparable para que possa ser
  *   comparada com outras instâncias desta classe.
+ *
+ *   @author Márcio Ribeiro - 8200408
+ *   @author Hugo Ribeiro - 8200441
  */
 public class PathWithWeight implements Comparable<PathWithWeight> {
   @SerializedName("path")

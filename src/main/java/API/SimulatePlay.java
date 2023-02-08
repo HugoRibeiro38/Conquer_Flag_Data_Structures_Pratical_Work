@@ -15,6 +15,9 @@ import java.util.Scanner;
 
 /**
  * Class that simulates the game.
+ *
+ * @author Márcio Ribeiro - 8200408
+ * @author Hugo Ribeiro - 8200441
  */
 public class SimulatePlay implements ISimulatePlay {
   private static ListADT<IPlayer> players = new ArrayUnorderedList<>();

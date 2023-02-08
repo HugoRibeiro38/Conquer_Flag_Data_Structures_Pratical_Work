@@ -15,6 +15,8 @@ import java.util.Scanner;
  * Classe que possui métodos que permitem o utilizador, obter o caminho mais curto entre dois locais,
  * o caminho mais curto entre dois locais tendo que passar por um local,
  * e exportar todos os caminhos possíveis entre dois locais.
+ * @author Márcio Ribeiro - 8200408
+ * @author Hugo Ribeiro - 8200441
  */
 public class Manage_Game {
 

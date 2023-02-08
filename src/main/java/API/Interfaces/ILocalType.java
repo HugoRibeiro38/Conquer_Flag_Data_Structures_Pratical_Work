@@ -4,6 +4,8 @@ import API.Enums.LocalType;
 
 /**
  * Interface que representa o tipo de local.
+ * @author Márcio Ribeiro - 8200408
+ * @author Hugo Ribeiro - 8200441
  */
 public interface ILocalType {
 

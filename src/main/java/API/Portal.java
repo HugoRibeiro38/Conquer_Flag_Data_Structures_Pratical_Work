@@ -11,6 +11,8 @@ import java.util.Scanner;
 
 /**
  *  Classe que representa um objeto de Portal no jogo.
+ *  @author Márcio Ribeiro - 8200408
+ *  @author Hugo Ribeiro - 8200441
  */
 public class Portal extends Local implements IPortal {
   private String name;

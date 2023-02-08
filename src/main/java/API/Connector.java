@@ -14,6 +14,9 @@ import java.util.Scanner;
  *   Um connector é um local que permite aos jogadores recarregarem a sua energia
  *   Um connector tem um Cooldown Timer que impede os jogadores de recarregarem a sua energia demasiadas vezes
  *   Um connector tem um limite de energia que os jogadores podem recarregar
+ *
+ *   @author Márcio Ribeiro - 8200408
+ * @author Hugo Ribeiro - 8200441
  */
 public class Connector extends Local implements IConnector {
   private static final int DEFAULT_SIZE = 20;

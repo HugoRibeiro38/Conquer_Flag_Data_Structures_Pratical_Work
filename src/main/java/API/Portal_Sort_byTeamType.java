@@ -5,6 +5,9 @@ import API.Interfaces.IPortal;
 /**
  * Classe que representa um portal.
  * Com o objectivo de ordenar os portais por tipo de equipa.
+ *
+ * @author Márcio Ribeiro - 8200408
+ * @author Hugo Ribeiro - 8200441
  */
 public class Portal_Sort_byTeamType extends Portal implements Comparable<IPortal> {
   /**

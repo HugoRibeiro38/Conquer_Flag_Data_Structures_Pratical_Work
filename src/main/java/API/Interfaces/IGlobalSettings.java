@@ -4,6 +4,8 @@ import API.Local;
 
 /**
  * Interface que representa configurações globais do jogo.
+ * @author Márcio Ribeiro - 8200408
+ * @author Hugo Ribeiro - 8200441
  */
 public interface IGlobalSettings {
 

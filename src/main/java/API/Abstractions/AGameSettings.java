@@ -4,6 +4,9 @@ package API.Abstractions;
  * Classe abstracta que representa as configurações comuns a todos os locais.
  * <p>
  *   Possui a energia do local.
+ *
+ * @author Márcio Ribeiro - 8200408
+ * @author Hugo Ribeiro - 8200441
  */
 public abstract class AGameSettings {
   private int energy;

@@ -16,6 +16,9 @@ import java.util.Scanner;
  * Classe que possui métodos que permitem o utilizador, adicionar um novo local, editar um local,
  * remover um local, listar todos os locais, exportar todos os locais para um ficheiro JSON,
  * e importar todos os locais de um ficheiro JSON.
+ *
+ * @author Márcio Ribeiro - 8200408
+ * @author Hugo Ribeiro - 8200441
  */
 public class Manage_Local {
 

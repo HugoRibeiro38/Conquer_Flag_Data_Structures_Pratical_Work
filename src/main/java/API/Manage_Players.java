@@ -21,6 +21,8 @@ import java.util.Scanner;
 
 /**
  * Classe que gere os jogadores.
+ * @author Márcio Ribeiro - 8200408
+ * @author Hugo Ribeiro - 8200441
  */
 public class Manage_Players {
 

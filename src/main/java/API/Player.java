@@ -6,6 +6,8 @@ import API.Interfaces.IPlayer;
 
 /**
  * Classe que representa um jogador
+ * @author Márcio Ribeiro - 8200408
+ * @author Hugo Ribeiro - 8200441
  */
 public class Player implements IPlayer {
 

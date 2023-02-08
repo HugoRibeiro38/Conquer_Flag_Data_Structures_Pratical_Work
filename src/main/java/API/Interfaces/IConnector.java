@@ -4,6 +4,8 @@ import API.Player;
 
 /**
  * Interface que representa um connector.
+ * @author Márcio Ribeiro - 8200408
+ * @author Hugo Ribeiro - 8200441
  */
 public interface IConnector extends ILocalType {
 
