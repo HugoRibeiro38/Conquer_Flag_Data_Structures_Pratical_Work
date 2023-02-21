@@ -2,7 +2,7 @@
 
 Performing a practical work where it addresses the use of graphs for the management of a game
 
-## The developed API supports:
+# The developed API supports:
 
 - Route Management
 - Player Management
@@ -10,7 +10,7 @@ Performing a practical work where it addresses the use of graphs for the managem
 - Game Management
 
 
-## Here is a representation of game management from a graph:
+# Here is a representation of game management from a graph:
 
 ![Imagem](https://user-images.githubusercontent.com/76649650/220442820-dcd9a70a-02ed-46df-b952-a9af527063fa.png)
 
